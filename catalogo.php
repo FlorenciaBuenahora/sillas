@@ -7,7 +7,10 @@ include("nav.php");
 $ambienteSeleccionado=$_GET['Ambiente'];
 
 // Le digo que quiero mostrar los que cumplen con el Ambiente seleccionado y un LIKE para que no ignore las sillas versátiles
-$querySillasPorAmbiente="SELECT Nombre, Precio FROM sillas WHERE Ambiente LIKE '%$ambienteSeleccionado%'";
+$querySillasPorAmbiente="SELECT DISTINCT S.Nombre, S.Precio FROM sillas AS S
+INNER JOIN sillasMateriales AS SM ON S.ID = SM.IDSilla 
+INNER JOIN colores AS C ON C.ID = S.Color
+WHERE Ambiente LIKE '%$ambienteSeleccionado%'";
 
 include("consultasFiltro.php");
 

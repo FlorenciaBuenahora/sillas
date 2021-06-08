@@ -53,6 +53,44 @@ if(isset($_GET['Marca'])) {
     $querySillasPorAmbiente=$querySillasPorAmbiente. " AND Marca IN ($textoMarcasIN)";
 }
 
+// Material
+
+if(isset($_GET['Material'])) {
+    $materialSeleccionado=$_GET['Material'];
+    $stringFiltro="";
+
+    foreach($materialSeleccionado as $unMaterial){
+        // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+        if($unMaterial === $materialSeleccionado[0]){
+            $stringFiltro = $stringFiltro ." AND SM.IDMaterial = $unMaterial";
+        }
+        // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
+        else {
+            $stringFiltro = $stringFiltro ." OR SM.IDMaterial = $unMaterial";
+        }
+    }
+    $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
+}
+
+// Color
+
+if(isset($_GET['Color'])) {
+    $colorSeleccionado=$_GET['Color'];
+    $stringFiltro="";
+
+    foreach($colorSeleccionado as $unColor){
+        // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+        if($unColor === $colorSeleccionado[0]){
+            $stringFiltro = $stringFiltro ." AND C.ID = $unColor";
+        }
+        // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
+        else {
+            $stringFiltro = $stringFiltro ." OR C.ID = $unColor";
+        }
+    }
+    $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
+}
+
 // Estilo
 
 if(isset($_GET['Estilo'])) {
