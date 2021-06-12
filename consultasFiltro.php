@@ -27,123 +27,124 @@
 
 // }
 
-// Marca
+// Filtrar TODO
+$textoIN="";
+if(isset($_GET['filtrarTodo'])) {
 
-if(isset($_GET['Marca'])) {
-    $marcaSeleccionada=$_GET['Marca'];
-    $textoMarcasIN="";
+    // Marca
 
-
-
+    if(isset($_GET['Marca'])) {
+        $marcaSeleccionada=$_GET['Marca'];
+        $textoMarcasIN="";
         // Se le asigna al array el valor de las marcas
 
-    // Recorrer marcas para generar el string de IN
-    foreach($marcaSeleccionada as $unaMarca){
-        // Si marca es el ultimo elemento de la array
-        if($unaMarca === end($marcaSeleccionada))
-        // No agrega coma
-        {
-            $textoMarcasIN = $textoMarcasIN ."'". $unaMarca. "'";  
+        // Recorrer marcas para generar el string de IN
+        foreach($marcaSeleccionada as $unaMarca){
+            // Si marca es el ultimo elemento de la array
+            if($unaMarca === end($marcaSeleccionada))
+            // No agrega coma
+            {
+                $textoMarcasIN = $textoMarcasIN ."'". $unaMarca. "'";  
+            }
+            //Sino es el ultimo le agrega una coma
+            else{
+                $textoMarcasIN = $textoMarcasIN ."'".  $unaMarca."',";
+            }
         }
-        //Sino es el ultimo le agrega una coma
-        else{
-            $textoMarcasIN = $textoMarcasIN ."'".  $unaMarca."',";
-        }
+        $querySillasPorAmbiente=$querySillasPorAmbiente. " AND Marca IN ($textoMarcasIN)";
     }
-    $querySillasPorAmbiente=$querySillasPorAmbiente. " AND Marca IN ($textoMarcasIN)";
+
+    // Material
+
+    if(isset($_GET['Material'])) {
+        $materialSeleccionado=$_GET['Material'];
+        $stringFiltro="";
+
+        foreach($materialSeleccionado as $unMaterial){
+            // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+            if($unMaterial === $materialSeleccionado[0]){
+                $stringFiltro = $stringFiltro ." AND SM.IDMaterial = $unMaterial";
+            }
+            // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
+            else {
+                $stringFiltro = $stringFiltro ." OR SM.IDMaterial = $unMaterial";
+            }
+        }
+        $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
+    }
+
+    // Color
+
+    if(isset($_GET['Color'])) {
+        $colorSeleccionado=$_GET['Color'];
+        $stringFiltro="";
+
+        foreach($colorSeleccionado as $unColor){
+            // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+            if($unColor === $colorSeleccionado[0]){
+                $stringFiltro = $stringFiltro ." AND C.ID = $unColor";
+            }
+            // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
+            else {
+                $stringFiltro = $stringFiltro ." OR C.ID = $unColor";
+            }
+        }
+        $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
+    }
+
+    // Estilo
+
+    if(isset($_GET['Estilo'])) {
+        $estiloSeleccionado=$_GET['Estilo'];
+        // Se define la variable que contendra la string para filtrar los estilos
+        $stringFiltro="";
+
+
+        // Se recorreran los estilos seleccionados por el usuario
+        foreach($estiloSeleccionado as $unEstilo){
+            // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+            if($unEstilo === $estiloSeleccionado[0]){
+                $stringFiltro = $stringFiltro ." AND Estilo LIKE '%$unEstilo%'";
+            }
+            // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
+            else {
+                $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%'";
+            }
+        }
+        $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
+    }
+
+    // Precio
+
+    if(isset($_GET['precioMinimo'])) {
+
+        // Registro las dos variables para precio
+        $precioMinimo = $_GET['precioMinimo'];
+        $precioMaximo = $_GET['precioMaximo'];
+
+        // Si es vacio
+        if ($precioMinimo === "") {
+            $queryPrecioMinimo = "SELECT MIN(Precio) FROM sillas";
+            $resultPrecioMinimo = mysqli_query($link, $queryPrecioMinimo);
+            // Convierto lo que me devuelve la consulta en un array
+            $precioMinimoDato = mysqli_fetch_array($resultPrecioMinimo);
+            // Indice 0 para que no escriba el array del valor
+            $precioMinimo = $precioMinimoDato[0];
+
+        }
+
+        // Si es vacio
+        if ($precioMaximo === "") {
+            $queryPrecioMaximo = "SELECT MAX(Precio) FROM sillas";
+            $resultPrecioMaximo = mysqli_query($link, $queryPrecioMaximo);
+            // Convierto lo que me devuelve la consulta en un array
+            $precioMaximoDato = mysqli_fetch_array($resultPrecioMaximo);
+            // Indice 0 para que no escriba el array del valor
+            $precioMaximo = $precioMaximoDato[0];
+
+        }
+
+        $querySillasPorAmbiente = $querySillasPorAmbiente. " AND Precio BETWEEN $precioMinimo AND $precioMaximo";
+    }
 }
-
-// Material
-
-if(isset($_GET['Material'])) {
-    $materialSeleccionado=$_GET['Material'];
-    $stringFiltro="";
-
-    foreach($materialSeleccionado as $unMaterial){
-        // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
-        if($unMaterial === $materialSeleccionado[0]){
-            $stringFiltro = $stringFiltro ." AND SM.IDMaterial = $unMaterial";
-        }
-        // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
-        else {
-            $stringFiltro = $stringFiltro ." OR SM.IDMaterial = $unMaterial";
-        }
-    }
-    $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
-}
-
-// Color
-
-if(isset($_GET['Color'])) {
-    $colorSeleccionado=$_GET['Color'];
-    $stringFiltro="";
-
-    foreach($colorSeleccionado as $unColor){
-        // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
-        if($unColor === $colorSeleccionado[0]){
-            $stringFiltro = $stringFiltro ." AND C.ID = $unColor";
-        }
-        // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
-        else {
-            $stringFiltro = $stringFiltro ." OR C.ID = $unColor";
-        }
-    }
-    $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
-}
-
-// Estilo
-
-if(isset($_GET['Estilo'])) {
-    $estiloSeleccionado=$_GET['Estilo'];
-    // Se define la variable que contendra la string para filtrar los estilos
-    $stringFiltro="";
-
-
-    // Se recorreran los estilos seleccionados por el usuario
-    foreach($estiloSeleccionado as $unEstilo){
-        // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
-        if($unEstilo === $estiloSeleccionado[0]){
-            $stringFiltro = $stringFiltro ." AND Estilo LIKE '%$unEstilo%'";
-        }
-        // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
-        else {
-            $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%'";
-        }
-    }
-    $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
-}
-
-// Precio
-
-if(isset($_GET['precioMinimo'])) {
-
-    // Registro las dos variables para precio
-    $precioMinimo = $_GET['precioMinimo'];
-    $precioMaximo = $_GET['precioMaximo'];
-
-    // Si es vacio
-    if ($precioMinimo === "") {
-        $queryPrecioMinimo = "SELECT MIN(Precio) FROM sillas";
-        $resultPrecioMinimo = mysqli_query($link, $queryPrecioMinimo);
-        // Convierto lo que me devuelve la consulta en un array
-        $precioMinimoDato = mysqli_fetch_array($resultPrecioMinimo);
-        // Indice 0 para que no escriba el array del valor
-        $precioMinimo = $precioMinimoDato[0];
-
-    }
-
-    // Si es vacio
-    if ($precioMaximo === "") {
-        $queryPrecioMaximo = "SELECT MAX(Precio) FROM sillas";
-        $resultPrecioMaximo = mysqli_query($link, $queryPrecioMaximo);
-        // Convierto lo que me devuelve la consulta en un array
-        $precioMaximoDato = mysqli_fetch_array($resultPrecioMaximo);
-        // Indice 0 para que no escriba el array del valor
-        $precioMaximo = $precioMaximoDato[0];
-
-    }
-
-    $querySillasPorAmbiente = $querySillasPorAmbiente. " AND Precio BETWEEN $precioMinimo AND $precioMaximo";
-}
-
 ?>

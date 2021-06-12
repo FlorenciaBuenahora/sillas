@@ -5,6 +5,8 @@
 // $resultSillasPorMarca=mysqli_query($link, $querySillasPorMarca);
 // $queryMarcas = "SELECT Nombre, ID FROM marcas";
 
+
+
 // Query Marcas
 $queryMarcas = "SELECT DISTINCT Marca FROM sillas ORDER BY Marca ASC";
 $resultMarcas = mysqli_query($link, $queryMarcas);
@@ -51,27 +53,46 @@ while($unEstilo=mysqli_fetch_array($resultEstilos)) {
 
 }
 
+// Checkear el último ambiente seleccionado
+$ambienteFiltrado = "";
+if(isset($_GET['Ambiente'])){
+    $ambienteFiltrado = $_GET['Ambiente'];
+}
 
 ?>
 
 <aside>
 <!-- Form para Marcas -->
     <form action="catalogo.php" method="GET">
+
+        <!-- Input oculto para pasarle el Ambiente -->
+        <input style="display:none;" type="text" name="Ambiente" value="<?php echo $ambienteFiltrado ?>">
+
         <h4>Marca</h4>
         <?php
+
+        // Para que los checkboxes queden seleccionados
+        $checkMarcasSeleccionadas = array();
+        if (isset($_GET['Marca'])) {
+            $checkMarcasSeleccionadas = $_GET['Marca'];
+        }
+
         while ($unCheckMarca=mysqli_fetch_array($resultMarcas)) {
+            $checked = "";
+            if(in_array($unCheckMarca[0], $checkMarcasSeleccionadas)) {
+                $checked = "checked";
+            }
         ?>   
-            <input type="checkbox" value="<?php echo $unCheckMarca[0]?>" name="Marca[]" id="<?php echo $unCheckMarca[0]?>">
+        <!-- Cuando seleccione mas de uno lo manda como un array -->
+            <input type="checkbox" value="<?php echo $unCheckMarca[0]?>" name="Marca[]" id="<?php echo $unCheckMarca[0]?>" <?php echo $checked ?>>
             <label for="<?php echo $unCheckMarca[0]?>"><?php echo $unCheckMarca[0]?></label>
         <?php 
         }
         ?>
         
-        <input type="submit" value="Filtrar" name="FiltrarTodo">
-    </form>
+        <hr>
 
-    <!-- Form para Color -->
-    <form action="catalogo.php" method="GET">
+        <!-- Form para Color -->
         <h4>Color</h4>
         <?php
         while ($unCheckColor=mysqli_fetch_array($resultColor)) {
@@ -83,12 +104,11 @@ while($unEstilo=mysqli_fetch_array($resultEstilos)) {
         <?php 
         }
         ?>
-        
-        <input type="submit" value="Filtrar" name="FiltrarTodo">
-    </form>
 
-    <!-- Form para Materiales -->
-    <form action="catalogo.php" method="GET">
+        <hr>
+
+        <!-- Form para Materiales -->
+    
         <h4>Material</h4>
         <?php
         while ($unCheckMaterial=mysqli_fetch_array($resultMateriales)) {
@@ -98,12 +118,11 @@ while($unEstilo=mysqli_fetch_array($resultEstilos)) {
             <?php 
         }
         ?>
-        
-        <input type="submit" value="Filtrar" name="FiltrarTodo">
-    </form>
 
-    <!-- Form para Estilos -->
-    <form action="catalogo.php" method="GET">
+        <hr>
+
+        <!-- Form para Estilos -->
+    
         <h4>Estilo</h4>
         <?php
         foreach($estilosSelect as $unEstilos) {
@@ -113,28 +132,26 @@ while($unEstilo=mysqli_fetch_array($resultEstilos)) {
         <?php 
         }
         ?>
-        
-        <input type="submit" value="Filtrar" name="FiltrarTodo">
-    </form>
 
-<!-- Form para Precio -->
+        <hr>
 
-<?php 
-// Para que el precio quede visible
-$precioMinimo="";
-$precioMaximo="";
-if(isset($_GET['precioMinimo']))
-{
-    $precioMinimo=$_GET['precioMinimo'];
-    $precioMaximo=$_GET['precioMaximo'];
-}
-//-------------------------------------------------------
-?>
-<form action="catalogo.php" method="GET">
-    <h4>Precio</h4>
-    <input type="number" name="precioMinimo" id="precioMinimo" placeholder="Mínimo" value="<?php echo $precioMinimo?>">
-    <input type="number" name="precioMaximo" id="precioMaximo" placeholder="Máximo" value="<?php echo $precioMaximo?>">
-    <input type="submit" value="Filtrar">
-</form>
-    
+        <!-- Form para Precio -->
+
+        <?php 
+        // Para que el precio quede visible
+        $precioMinimo="";
+        $precioMaximo="";
+        if(isset($_GET['precioMinimo']))
+        {
+            $precioMinimo=$_GET['precioMinimo'];
+            $precioMaximo=$_GET['precioMaximo'];
+        }
+        ?>
+
+        <h4>Precio</h4>
+        <input type="number" name="precioMinimo" id="precioMinimo" placeholder="Mínimo" value="<?php echo $precioMinimo?>">
+        <input type="number" name="precioMaximo" id="precioMaximo" placeholder="Máximo" value="<?php echo $precioMaximo?>">
+
+        <input type="submit" value="Filtrar" name="filtrarTodo">
+    </form>   
 </aside>
