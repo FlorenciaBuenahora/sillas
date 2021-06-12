@@ -117,5 +117,24 @@ while($unEstilo=mysqli_fetch_array($resultEstilos)) {
         <input type="submit" value="Filtrar" name="FiltrarTodo">
     </form>
 
+<!-- Form para Precio -->
+
+<?php 
+// Para que el precio quede visible
+$precioMinimo="";
+$precioMaximo="";
+if(isset($_GET['precioMinimo']))
+{
+    $precioMinimo=$_GET['precioMinimo'];
+    $precioMaximo=$_GET['precioMaximo'];
+}
+//-------------------------------------------------------
+?>
+<form action="catalogo.php" method="GET">
+    <h4>Precio</h4>
+    <input type="number" name="precioMinimo" id="precioMinimo" placeholder="Mínimo" value="<?php echo $precioMinimo?>">
+    <input type="number" name="precioMaximo" id="precioMaximo" placeholder="Máximo" value="<?php echo $precioMaximo?>">
+    <input type="submit" value="Filtrar">
+</form>
     
 </aside>

@@ -113,4 +113,37 @@ if(isset($_GET['Estilo'])) {
     $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
 }
 
+// Precio
+
+if(isset($_GET['precioMinimo'])) {
+
+    // Registro las dos variables para precio
+    $precioMinimo = $_GET['precioMinimo'];
+    $precioMaximo = $_GET['precioMaximo'];
+
+    // Si es vacio
+    if ($precioMinimo === "") {
+        $queryPrecioMinimo = "SELECT MIN(Precio) FROM sillas";
+        $resultPrecioMinimo = mysqli_query($link, $queryPrecioMinimo);
+        // Convierto lo que me devuelve la consulta en un array
+        $precioMinimoDato = mysqli_fetch_array($resultPrecioMinimo);
+        // Indice 0 para que no escriba el array del valor
+        $precioMinimo = $precioMinimoDato[0];
+
+    }
+
+    // Si es vacio
+    if ($precioMaximo === "") {
+        $queryPrecioMaximo = "SELECT MAX(Precio) FROM sillas";
+        $resultPrecioMaximo = mysqli_query($link, $queryPrecioMaximo);
+        // Convierto lo que me devuelve la consulta en un array
+        $precioMaximoDato = mysqli_fetch_array($resultPrecioMaximo);
+        // Indice 0 para que no escriba el array del valor
+        $precioMaximo = $precioMaximoDato[0];
+
+    }
+
+    $querySillasPorAmbiente = $querySillasPorAmbiente. " AND Precio BETWEEN $precioMinimo AND $precioMaximo";
+}
+
 ?>
