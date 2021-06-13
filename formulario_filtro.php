@@ -40,14 +40,14 @@ $resultMateriales = mysqli_query($link, $queryMateriales);
 $queryEstilos = "SELECT DISTINCT Estilo FROM sillas ORDER BY CAST(Estilo AS CHAR)";
 $resultEstilos = mysqli_query($link, $queryEstilos);
 
-$estilosSelect = array();
+$estilosCheck = array();
 
 while($unEstilo=mysqli_fetch_array($resultEstilos)) {
     // var_dump($unEstilo[0]);
     $arrayEstilos = explode(",", "$unEstilo[0]");
     foreach($arrayEstilos as $unValorEstilo) {
-        if(!in_array($unValorEstilo, $estilosSelect)) {
-            array_push($estilosSelect, $unValorEstilo);
+        if(!in_array($unValorEstilo, $estilosCheck)) {
+            array_push($estilosCheck, $unValorEstilo);
         }
     }
 
@@ -95,9 +95,20 @@ if(isset($_GET['Ambiente'])){
         <!-- Form para Color -->
         <h4>Color</h4>
         <?php
+
+        // Para que los checkboxes queden seleccionados
+        $checkColoresSeleccionados = array();
+        if (isset($_GET['Color'])) {
+            $checkColoresSeleccionados = $_GET['Color'];
+        }
+
         while ($unCheckColor=mysqli_fetch_array($resultColor)) {
+            $checked = "";
+            if(in_array($unCheckColor[0], $checkColoresSeleccionados)) {
+                $checked = "checked";
+            }
         ?>   
-            <input type="checkbox" value="<?php echo $unCheckColor[0]?>" name="Color[]" id="<?php echo $unCheckColor[0]?>">
+            <input type="checkbox" value="<?php echo $unCheckColor[0]?>" name="Color[]" id="<?php echo $unCheckColor[0]?>" <?php echo $checked ?>>
             <label for="<?php echo $unCheckColor[0]?>"><?php echo $unCheckColor[1]?>
                 <div style="background-color:<?php echo $unCheckColor[2]?>; width:73px; height:25px"></div>
             </label>
@@ -111,9 +122,19 @@ if(isset($_GET['Ambiente'])){
     
         <h4>Material</h4>
         <?php
+        // Para que los checkboxes queden seleccionados
+        $checkMaterialesSeleccionados = array();
+        if (isset($_GET['Material'])) {
+            $checkMaterialesSeleccionados = $_GET['Material'];
+        }
+
         while ($unCheckMaterial=mysqli_fetch_array($resultMateriales)) {
+            $checked = "";
+            if(in_array($unCheckMaterial[0], $checkMaterialesSeleccionados)) {
+                $checked = "checked";
+            }
             ?>   
-                <input type="checkbox" value="<?php echo $unCheckMaterial[0]?>" name="Material[]" id="<?php echo $unCheckMaterial[1]?>">
+                <input type="checkbox" value="<?php echo $unCheckMaterial[0]?>" name="Material[]" id="<?php echo $unCheckMaterial[1]?>" <?php echo $checked ?>>
                 <label for="<?php echo $unCheckMaterial[1]?>"><?php echo $unCheckMaterial[1]?></label>
             <?php 
         }
@@ -125,9 +146,19 @@ if(isset($_GET['Ambiente'])){
     
         <h4>Estilo</h4>
         <?php
-        foreach($estilosSelect as $unEstilos) {
+        // Para que los checkboxes queden seleccionados
+        $checkEstilosSeleccionados = array();
+        if (isset($_GET['Estilo'])) {
+            $checkEstilosSeleccionados = $_GET['Estilo'];
+        }
+
+        foreach($estilosCheck as $unEstilos) {
+            $checked = "";
+            if(in_array($unEstilos, $checkEstilosSeleccionados)) {
+                $checked = "checked";
+            }
         ?>
-            <input type="checkbox" value="<?php echo $unEstilos?>" name="Estilo[]" id="<?php echo $unEstilos?>">
+            <input type="checkbox" value="<?php echo $unEstilos?>" name="Estilo[]" id="<?php echo $unEstilos?>" <?php echo $checked ?>>
             <label for="<?php echo $unEstilos?>"><?php echo $unEstilos?></label>
         <?php 
         }
