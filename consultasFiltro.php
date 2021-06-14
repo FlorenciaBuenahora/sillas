@@ -51,7 +51,7 @@ if(isset($_GET['filtrarTodo'])) {
                 $textoMarcasIN = $textoMarcasIN ."'".  $unaMarca."',";
             }
         }
-        $querySillasPorAmbiente=$querySillasPorAmbiente. " AND Marca IN ($textoMarcasIN)";
+        $querySillasPorAmbiente=$querySillasPorAmbiente. " AND (Marca IN ($textoMarcasIN))";
     }
 
     // Material
@@ -59,15 +59,26 @@ if(isset($_GET['filtrarTodo'])) {
     if(isset($_GET['Material'])) {
         $materialSeleccionado=$_GET['Material'];
         $stringFiltro="";
-
         foreach($materialSeleccionado as $unMaterial){
-            // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
-            if($unMaterial === $materialSeleccionado[0]){
-                $stringFiltro = $stringFiltro ." AND SM.IDMaterial = $unMaterial";
+            // Checkea si el array tiene mas de un elemento 
+            if(count($materialSeleccionado) > 1){
+
+                // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+                if($unMaterial === $materialSeleccionado[0]){
+                    $stringFiltro = $stringFiltro ." AND (SM.IDMaterial = $unMaterial";
+                }
+                // Si es el ultimo elemento se le agrega un cierre de parentesis al final, se agregara la condicional OR para filtrar por los demas estilos
+                else if ($unMaterial === end($materialSeleccionado) ){
+                    $stringFiltro = $stringFiltro ." OR SM.IDMaterial = $unMaterial)";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else{
+                    $stringFiltro = $stringFiltro ." OR SM.IDMaterial = $unMaterial";
+                }
             }
-            // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
-            else {
-                $stringFiltro = $stringFiltro ." OR SM.IDMaterial = $unMaterial";
+            // En caso de que el array solo tenga 1 elemento
+            else{
+                $stringFiltro = $stringFiltro ." AND (SM.IDMaterial = $unMaterial)";
             }
         }
         $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
@@ -80,13 +91,25 @@ if(isset($_GET['filtrarTodo'])) {
         $stringFiltro="";
 
         foreach($colorSeleccionado as $unColor){
-            // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
-            if($unColor === $colorSeleccionado[0]){
-                $stringFiltro = $stringFiltro ." AND C.ID = $unColor";
+            //Si el array tiene mas de un elemento
+            if(count($colorSeleccionado) > 1){
+
+                // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+                if($unColor === $colorSeleccionado[0]){
+                    $stringFiltro = $stringFiltro ." AND (C.ID = $unColor";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else if($unColor === end($colorSeleccionado)){
+                    $stringFiltro = $stringFiltro ." OR C.ID = $unColor)";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else{
+                    $stringFiltro = $stringFiltro ." OR C.ID = $unColor";
+                }
             }
-            // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
-            else {
-                $stringFiltro = $stringFiltro ." OR C.ID = $unColor";
+            // En caso de que el array solo tenga 1 elemento
+            else{
+                $stringFiltro = $stringFiltro ." AND (C.ID = $unColor)";
             }
         }
         $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;
@@ -102,13 +125,25 @@ if(isset($_GET['filtrarTodo'])) {
 
         // Se recorreran los estilos seleccionados por el usuario
         foreach($estiloSeleccionado as $unEstilo){
-            // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
-            if($unEstilo === $estiloSeleccionado[0]){
-                $stringFiltro = $stringFiltro ." AND Estilo LIKE '%$unEstilo%'";
+            // Si el array tiene mas de un elemento 
+            if(count($estiloSeleccionado) > 1){
+
+                // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+                if($unEstilo === $estiloSeleccionado[0]){
+                    $stringFiltro = $stringFiltro ." AND (Estilo LIKE '%$unEstilo%'";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else if($unEstilo === end($estiloSeleccionado)){
+                    $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%')";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else{
+                    $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%'";
+                }
             }
-            // Sino es el primer elemento, se agregara la condicional OR para filtrar por los demas estilos
-            else {
-                $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%'";
+            // En caso de que el array solo tenga 1 elemento
+            else{
+                $stringFiltro = $stringFiltro ." AND (Estilo LIKE '%$unEstilo%')"; 
             }
         }
         $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;

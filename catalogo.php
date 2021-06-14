@@ -7,7 +7,7 @@ include("nav.php");
 $ambienteSeleccionado=$_GET['Ambiente'];
 
 // Le digo que quiero mostrar los que cumplen con el Ambiente seleccionado y un LIKE para que no ignore las sillas versátiles
-$querySillasPorAmbiente="SELECT DISTINCT S.Nombre, S.Precio FROM sillas AS S
+$querySillasPorAmbiente="SELECT DISTINCT S.ID, S.Nombre, S.Precio, S.Ambiente FROM sillas AS S
 INNER JOIN sillasMateriales AS SM ON S.ID = SM.IDSilla 
 INNER JOIN colores AS C ON C.ID = S.Color
 WHERE Ambiente LIKE '%$ambienteSeleccionado%'";
@@ -30,7 +30,7 @@ $resultSillasPorAmbiente=mysqli_query($link, $querySillasPorAmbiente);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="css/estilos.min.css">
-    <title>Catalogo</title>
+    <title>Catálogo</title>
 </head>
 <body>
 <?php echo "<h1>Sillas de $ambienteSeleccionado</h1>";
@@ -40,7 +40,7 @@ include ("formulario_filtro.php");
         <?php
             while($sillaFiltrada=mysqli_fetch_array($resultSillasPorAmbiente)){
                 echo "<div>";
-                echo "<h3>$sillaFiltrada[Nombre]</h3>";
+                echo "<h3><a href='ampliacion.php?ID=$sillaFiltrada[ID]&Ambiente=$ambienteSeleccionado'>$sillaFiltrada[Nombre]</a></h3>";
                 echo "<p>USD $sillaFiltrada[Precio]</p>";
                 echo "</div>";
             }
