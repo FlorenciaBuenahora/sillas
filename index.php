@@ -2,13 +2,12 @@
 include("conexion.php");
 
 // Los más nuevos //
-$queryNuevos="SELECT ID, Nombre, Precio FROM sillas ORDER BY ID DESC LIMIT 4";
+$queryNuevos="SELECT ID, Nombre, Precio FROM sillas WHERE Nuevo=1 ORDER BY ID DESC LIMIT 4";
 $resultNuevos=mysqli_query($link, $queryNuevos);
 
 // // Destacados
-// $queryDestacados="SELECT ID, Nombre, Precio FROM sillas ORDER BY ID RAND() LIMIT 4";
-// $resultDestacados=mysqli_query($link, $queryDestacados);
-// echo $resultDestacados;
+$queryDestacados="SELECT ID, Nombre, Precio, Destacado FROM sillas WHERE Destacado=1 ORDER BY ID LIMIT 4";
+$resultDestacados=mysqli_query($link, $queryDestacados);
 
 ?>
 
@@ -28,10 +27,20 @@ $resultNuevos=mysqli_query($link, $queryNuevos);
 <section>
 <h1>Los más nuevos</h1>
     <?php
-        while($unaSilla=mysqli_fetch_array($resultNuevos)) {
+        while($unNuevo=mysqli_fetch_array($resultNuevos)) {
             echo "<article>";
-            echo "<h3>$unaSilla[Nombre]</h3>";
-            echo "<p>USD $unaSilla[Precio]</p>";
+            echo "<h3><a href='ampliacion.php?ID=$unNuevo[ID]'>$unNuevo[Nombre]</a></h3>";
+            echo "<p>USD $unNuevo[Precio]</p>";
+            echo "</article>";
+        }
+    ?>
+
+<h1>Destacados</h1>
+    <?php
+        while($unDestacado=mysqli_fetch_array($resultDestacados)) {
+            echo "<article>";
+            echo "<h3><a href='ampliacion.php?ID=$unDestacado[ID]'>$unDestacado[Nombre]</a></h3>";
+            echo "<p>USD $unDestacado[Precio]</p>";
             echo "</article>";
         }
     ?>

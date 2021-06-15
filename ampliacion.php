@@ -6,10 +6,21 @@ $id=$_GET['ID'];
 $queryAmpliacion="SELECT * FROM sillas WHERE ID=$id";
 $resultAmpliacion=mysqli_query($link, $queryAmpliacion);
 
+// Traer un resultado 
+$unaSilla=mysqli_fetch_array($resultAmpliacion);
+
 // Paso el ambiente seleccionado para las migas de pan
 $ambienteFiltrado = "";
+$ambienteBreadcrumbs = "";
+$slash = "";
 if(isset($_GET['Ambiente'])){
     $ambienteFiltrado = $_GET['Ambiente'];
+    $slash = " /";
+    $ambienteBreadcrumbs =  $ambienteFiltrado;
+}
+// En caso de que se llegue por el buscador, utilizo el ambiente de la silla y no del nav
+else{
+    $ambienteFiltrado = $unaSilla['Ambiente'];  
 }
 
 // Materiales complementaria y relacional
@@ -32,14 +43,6 @@ while($Materiales=mysqli_fetch_array($resultMaterialesAmpliacion)) {
     }
 }
 
-        
-    
-
-
-
-// Traer un resultado 
-$unaSilla=mysqli_fetch_array($resultAmpliacion);
-
 // Productos similares
 $querySimilares = "SELECT ID, Nombre, Precio FROM sillas WHERE Ambiente='$ambienteFiltrado' AND ID<> $unaSilla[ID] ORDER BY RAND() LIMIT 4";
 echo ($querySimilares);
@@ -58,7 +61,7 @@ $resultSimilares = mysqli_query($link, $querySimilares);
 </head>
 <body>
 <nav>
-<p><a href="catalogo.php?Ambiente=<?php echo $ambienteFiltrado?>"><?php echo $ambienteFiltrado?></a> / <?php echo $unaSilla['Nombre']?></p>
+<p><a href="catalogo.php?Ambiente=<?php echo $ambienteBreadcrumbs?>"><?php echo $ambienteBreadcrumbs.$slash?></a> <?php echo $unaSilla['Nombre']?></p>
 </nav>
 
 <span><?php echo $unaSilla[Codigo]?></span>

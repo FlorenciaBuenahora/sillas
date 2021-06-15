@@ -5,7 +5,7 @@ $queryAmbiente="SELECT DISTINCT Ambiente FROM sillas WHERE Ambiente NOT LIKE '%C
 $resultAmbiente=mysqli_query($link, $queryAmbiente);
 
 // Buscador
-$queryBuscador = "SELECT DISTINCT Nombre, Precio FROM sillas";
+$queryBuscador = "SELECT DISTINCT ID, Nombre, Precio, Ambiente FROM sillas";
 $resultBuscador = mysqli_query($link, $queryBuscador);
 
 ?>

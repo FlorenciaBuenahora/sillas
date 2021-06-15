@@ -22,16 +22,17 @@ if (isset($_GET['buscar'])) {
     $queryBuscador = $queryBuscador. " WHERE Nombre LIKE '%$textoBuscar%'";
     // Al hacer click se genera una nueva página, por lo que vuelvo a hacer la consulta
     $resultBuscador = mysqli_query($link, $queryBuscador);
-
 }
 echo "<h1>Resultados de la búsqueda $textoBuscar</h1>";
+
+
 ?>
 
     <section>
         <?php
             while($sillaBuscada=mysqli_fetch_array($resultBuscador)){
                 echo "<div>";
-                echo "<h3>$sillaBuscada[Nombre]</h3>";
+                echo "<h3><a href='ampliacion.php?ID=$sillaBuscada[ID]'>$sillaBuscada[Nombre]</a></h3>";
                 echo "<p>USD $sillaBuscada[Precio]</p>";
                 echo "</div>";
             }
