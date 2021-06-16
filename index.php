@@ -24,6 +24,11 @@ $resultDestacados=mysqli_query($link, $queryDestacados);
 <body>
 <?php include "nav.php";?>
 
+<!-- Portada -->
+<div class="container text-center">
+    <img class="mt-3 img-fluid" src="assets/img/portada.jpg" alt="Tres imágenes de sillas">
+</div>
+
 <section>
 <h1>Los más nuevos</h1>
     <?php
