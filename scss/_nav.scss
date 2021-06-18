@@ -1,7 +1,43 @@
-.navbar-brand {
-    margin-right: 45px;
+.navbar {
+    .navbar-brand {
+        margin-right: 45px;
+    }
+    .navbar-nav .nav-item a {
+        text-decoration: none;
+        color: $black;
+
+        &:hover {
+            color: $ligth-celeste;
+        }
+    }
+    .input-group {
+        .input-group-text {
+            background-color: transparent;
+            border-color: $black;
+            border-radius: 0;
+        }
+        .form-control {
+            border-left: none;
+            padding-left: 0;
+            border-color: $black;
+            border-radius: 0;
+
+            &:focus {
+                border-color: $black;
+                box-shadow: none;
+            }
+        }
+    }
+    .nav-iconos img:first-child {
+        margin-right: 30px;
+    }
 }
-.navbar-nav .nav-item a {
-    text-decoration: none;
-    color: $black-font;
+
+// Media queries
+@include media-breakpoint-up(lg) {
+    .navbar {
+        .input-group {
+            margin-right: 30px;
+        }
+    }
 }

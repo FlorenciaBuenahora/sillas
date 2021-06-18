@@ -36,9 +36,18 @@ $resultBuscador = mysqli_query($link, $queryBuscador);
 
             ?>
             <form class="d-flex" action="resultadoBuscar.php" method="GET">
-            <input class="form-control me-2" type="search" id="buscar" name="buscar" placeholder="Buscar sillas" aria-label="Search" value="<?php echo $textoBuscado?>">
+                <div class="input-group">
+                    <span class="input-group-text"><img src="assets/iconos/search.svg" alt="Buscar"></span>
+                    <input class="form-control" type="search" id="buscar" name="buscar" placeholder="Buscar sillas" aria-label="Search" value="<?php echo $textoBuscado?>">
+                </div>
             <!-- <button class="btn btn-outline-success" type="hidden" value="Buscar">Search</button> -->
             </form>
+
+            <!-- Iconos usuario y carrito -->
+            <div class="nav-iconos mt-2 mt-lg-0">
+                <img src="assets/iconos/user.svg" alt="Usuario">
+                <img src="assets/iconos/shopping-cart.svg" alt="Carrito">
+            </div>
         </div>
     </div>
 </nav>

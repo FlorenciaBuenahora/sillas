@@ -1,5 +1,5 @@
 body {
-    font-family: $primary-font !important;
+    font-family: $primary-font;
 }
 .portada {
     width: 100%;
@@ -10,5 +10,20 @@ body {
 #inicio {
     h1 {
         font-size: 24px;
+    }
+}
+
+.nosotros-blurb {
+    p {
+        max-width: 610px;
+        margin: 0 auto;
+    }
+    a {
+        text-underline-offset: 3px;
+        color: $black;
+
+        &:hover {
+            color: $ligth-celeste;
+        }
     }
 }

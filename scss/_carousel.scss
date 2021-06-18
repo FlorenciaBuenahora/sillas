@@ -17,18 +17,36 @@
 }
 
 .carousel .active img {
-    padding: 0px 5px;
+    padding: 0px 15px;
 }
-
 .carousel-item img {
     max-height: 400px;
 }
+
+// Texto
+.carousel-item a {
+    text-decoration: none;
+    color: $black;
+
+    h2 {
+        font-size: 20px;
+        margin: 12px 0;
+        padding-left: 15px;
+    }
+    p {
+        font-weight: 600;
+        padding-left: 15px;
+    }
+}
+
 // Controles
 .carousel-control-prev, .carousel-control-next {
     height: 50px;
     width: 50px;
-    background-color: $primary-font;
+    background-color: $ligth-celeste;
+    opacity: 1;
     border-radius: 50%;
+    top: 37%;
 
     &:hover {
         cursor: pointer;
