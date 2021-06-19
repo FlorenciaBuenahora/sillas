@@ -1,0 +1,36 @@
+footer {
+    background-color: $dark-celeste;
+
+    address, p {
+        color: $white;
+    }
+    h4 {
+        font-size: 16px;
+        color: $white;
+        font-weight: 600;
+    }
+    #newsletter {
+        padding: 5px 10px;
+        border-radius: 0;
+        border: 1px solid $black;
+
+        &:focus, &:active {
+            border: 1px solid $black;
+        }
+    }
+    a {
+        color: $white;
+        text-decoration: none;
+
+        &:hover {
+            color: $white;
+        }
+    }
+    .copy {
+        border-top: 1px solid $white;
+
+        p {
+            font-size: 14px;
+        }
+    }
+}

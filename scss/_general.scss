@@ -1,12 +1,36 @@
 body {
     font-family: $primary-font;
 }
+
+.btn {
+    border-radius: 0;
+    border: none;
+    padding: 10px 24px;
+}
+.btn-secondary {
+    background-color: $white;
+    color: $dark-celeste;
+    font-weight: 600;
+
+    &:hover, &:focus {
+        background-color: $dark-secondarybtn;
+    }
+}
+.btn-terciary {
+    border: 1px solid $white;
+    color: $white;
+    font-weight: 600;
+    
+    &:hover, &:focus {
+        background-color: $white;
+        color: $dark-celeste;
+        box-shadow: none;
+    }
+}
+// Inicio
 .portada {
     width: 100%;
 }
-
-// Inicio
-
 #inicio {
     h1 {
         font-size: 24px;
