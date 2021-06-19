@@ -12,10 +12,11 @@ footer {
     #newsletter {
         padding: 5px 10px;
         border-radius: 0;
-        border: 1px solid $black;
+        border: 1px solid $white;
 
         &:focus, &:active {
-            border: 1px solid $black;
+            border: 1px solid $white;
+            border-radius: 0;
         }
     }
     a {
