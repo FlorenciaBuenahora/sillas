@@ -60,63 +60,83 @@ if(isset($_GET['Ambiente'])){
 }
 
 ?>
-
-<aside>
 <!-- Form para Marcas -->
     <form action="catalogo.php" method="GET">
 
         <!-- Input oculto para pasarle el Ambiente -->
         <input style="display:none;" type="text" name="Ambiente" value="<?php echo $ambienteFiltrado ?>">
 
-        <h4>Marca</h4>
-        <?php
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Marca
+                    </button>
+                </h3>
+                <div id="flush-collapseOne" class="accordion-collapse show" aria-labelledby="flush-headingOne">
+                    <div class="accordion-body">
+                        <?php
+                        // Para que los checkboxes queden seleccionados
+                        $checkMarcasSeleccionadas = array();
+                        if (isset($_GET['Marca'])) {
+                            $checkMarcasSeleccionadas = $_GET['Marca'];
+                        }
 
-        // Para que los checkboxes queden seleccionados
-        $checkMarcasSeleccionadas = array();
-        if (isset($_GET['Marca'])) {
-            $checkMarcasSeleccionadas = $_GET['Marca'];
-        }
+                        while ($unCheckMarca=mysqli_fetch_array($resultMarcas)) {
+                            $checked = "";
+                            if(in_array($unCheckMarca[0], $checkMarcasSeleccionadas)) {
+                                $checked = "checked";
+                            }
+                        ?>   
+                        <!-- Cuando seleccione mas de uno lo manda como un array -->
+                        <div class="form-check d-flex marca">
+                            <label class="form-check-label w-100" for="<?php echo $unCheckMarca[0]?>"><?php echo $unCheckMarca[0]?></label>
+                            <input class="form-check-input" type="checkbox" value="<?php echo $unCheckMarca[0]?>" name="Marca[]" id="<?php echo $unCheckMarca[0]?>" <?php echo $checked ?>>
+                        </div>
+                        <?php 
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Color
+                    </button>
+                </h3>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <!-- Form para Color -->
+                        <?php
 
-        while ($unCheckMarca=mysqli_fetch_array($resultMarcas)) {
-            $checked = "";
-            if(in_array($unCheckMarca[0], $checkMarcasSeleccionadas)) {
-                $checked = "checked";
-            }
-        ?>   
-        <!-- Cuando seleccione mas de uno lo manda como un array -->
-            <input type="checkbox" value="<?php echo $unCheckMarca[0]?>" name="Marca[]" id="<?php echo $unCheckMarca[0]?>" <?php echo $checked ?>>
-            <label for="<?php echo $unCheckMarca[0]?>"><?php echo $unCheckMarca[0]?></label>
-        <?php 
-        }
-        ?>
-        
-        <hr>
+                        // Para que los checkboxes queden seleccionados
+                        $checkColoresSeleccionados = array();
+                        if (isset($_GET['Color'])) {
+                            $checkColoresSeleccionados = $_GET['Color'];
+                        }
 
-        <!-- Form para Color -->
-        <h4>Color</h4>
-        <?php
+                        while ($unCheckColor=mysqli_fetch_array($resultColor)) {
+                            $checked = "";
+                            if(in_array($unCheckColor[0], $checkColoresSeleccionados)) {
+                                $checked = "checked";
+                            }
+                        ?>   
+                        <div class="form-check d-flex mb-2 color">
+                            <label class="form-check-label w-100" for="<?php echo $unCheckColor[0]?>"><?php echo $unCheckColor[1]?>
+                                <!-- <div style=" width:73px; height:25px"></div> -->
+                            </label>
+                            <input class="form-check-input" type="checkbox" value="<?php echo $unCheckColor[0]?>" name="Color[]" id="<?php echo $unCheckColor[0]?>" <?php echo $checked ?> style="background-color:<?php echo $unCheckColor[2]?>;">
+                        </div>
+                        <?php 
+                        }
+                        ?>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        // Para que los checkboxes queden seleccionados
-        $checkColoresSeleccionados = array();
-        if (isset($_GET['Color'])) {
-            $checkColoresSeleccionados = $_GET['Color'];
-        }
-
-        while ($unCheckColor=mysqli_fetch_array($resultColor)) {
-            $checked = "";
-            if(in_array($unCheckColor[0], $checkColoresSeleccionados)) {
-                $checked = "checked";
-            }
-        ?>   
-            <input type="checkbox" value="<?php echo $unCheckColor[0]?>" name="Color[]" id="<?php echo $unCheckColor[0]?>" <?php echo $checked ?>>
-            <label for="<?php echo $unCheckColor[0]?>"><?php echo $unCheckColor[1]?>
-                <div style="background-color:<?php echo $unCheckColor[2]?>; width:73px; height:25px"></div>
-            </label>
-        <?php 
-        }
-        ?>
-
-        <hr>
 
         <!-- Form para Materiales -->
     
@@ -185,4 +205,3 @@ if(isset($_GET['Ambiente'])){
 
         <input type="submit" value="Filtrar" name="filtrarTodo">
     </form>   
-</aside>

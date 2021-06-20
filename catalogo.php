@@ -1,6 +1,5 @@
 <?php
 include("conexion.php");
-include("nav.php");
 
 
 // Toma el dato enviado por GET de la url
@@ -15,7 +14,7 @@ WHERE Ambiente LIKE '%$ambienteSeleccionado%'";
 include("consultasFiltro.php");
 
 
-echo $querySillasPorAmbiente;
+// echo $querySillasPorAmbiente;
 
 
 $resultSillasPorAmbiente=mysqli_query($link, $querySillasPorAmbiente);
@@ -33,9 +32,18 @@ $resultSillasPorAmbiente=mysqli_query($link, $querySillasPorAmbiente);
     <title>Catálogo</title>
 </head>
 <body>
-<?php echo "<h1>Sillas de $ambienteSeleccionado</h1>";
-include ("formulario_filtro.php");
+<?php
+// Nav 
+include("nav.php");
 ?>
+
+<div class="container mt-4">
+    <aside class="col-lg-2">
+        <?php echo "<h1 class='titulo-catalogo'>Sillas de $ambienteSeleccionado</h1>"; 
+        include ("formulario_filtro.php");
+        ?>
+    </aside>
+</div>
     <section>
         <?php
             while($sillaFiltrada=mysqli_fetch_array($resultSillasPorAmbiente)){
@@ -46,5 +54,8 @@ include ("formulario_filtro.php");
             }
         ?>
     </section>
+
+<script src="js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </body>
 </html>

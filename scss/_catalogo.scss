@@ -1,0 +1,27 @@
+.titulo-catalogo {
+    font-size: 24px;
+    font-weight: 600;
+}
+.marca {
+    padding-left: 0;
+
+    .form-check-input {
+        float: none;
+        margin-left: -1.2em;
+    }
+}
+.accordion-item {
+    border: 0;
+}
+.accordion-button:focus {
+    border-color: transparent;
+    box-shadow: none;
+}
+.color {
+    padding-left: 0;
+
+    .form-check-input {
+        width: 5.2em;
+        height: 1.5em;
+    }
+}
