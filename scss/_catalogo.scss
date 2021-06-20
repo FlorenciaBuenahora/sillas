@@ -2,29 +2,57 @@
     font-size: 24px;
     font-weight: 600;
 }
-.marca {
-    padding-left: 0;
 
-    .form-check-input {
-        float: none;
-        margin-left: -1.2em;
+// Filtros
+.filtro {
+
+    .marca, .material, .estilo {
+        padding-left: 0;
+
+        .form-check-input {
+            float: none;
+            margin-left: -1.2em;
+        }
     }
-}
-.accordion-item {
-    border: 0;
-}
-.accordion-button:focus {
-    border-color: transparent;
-    box-shadow: none;
-}
-.color-body {
-    padding-right: 0;
-}
-.color {
-    padding-left: 0;
+    .accordion-item {
+        border: 0;
+    }
+    .accordion-button:focus {
+        border-color: transparent;
+        box-shadow: none;
+    }
+    .color-body {
+        padding-right: 0;
+    }
+    .color {
+        padding-left: 0;
 
-    .form-check-input {
-        width: 4.4em;
-        height: 1.5em;
+        .form-check-input {
+            width: 4.4em;
+            height: 1.5em;
+        }
+    }
+    .precio {
+        input {
+            width: 100%;
+            border-radius: 0;
+            border: 1px solid $black;
+            padding: 5px 10px;
+
+            &:active, &:focus {
+                border-radius: 0;
+            }
+        }
+    }
+    .btn-terciary {
+        width: 100%;
+        border: 1px solid $black;
+        font-weight: 600;
+
+        &:hover {
+            background-color: $darken-celeste;
+            color: $white;
+            border-color: transparent;
+        }
     }
 }

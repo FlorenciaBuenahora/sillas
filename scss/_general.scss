@@ -14,20 +14,10 @@ body {
     font-weight: 600;
 
     &:hover, &:focus {
-        background-color: $dark-secondarybtn;
+        background-color: $darken-celeste;
     }
 }
-.btn-terciary {
-    border: 1px solid $white;
-    color: $white;
-    font-weight: 600;
-    
-    &:hover, &:focus {
-        background-color: $white;
-        color: $dark-celeste;
-        box-shadow: none;
-    }
-}
+
 // Inicio
 .portada {
     width: 100%;

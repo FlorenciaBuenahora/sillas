@@ -61,19 +61,20 @@ if(isset($_GET['Ambiente'])){
 
 ?>
 <!-- Form para Marcas -->
-    <form action="catalogo.php" method="GET">
+    <form action="catalogo.php" method="GET" class="filtro">
 
         <!-- Input oculto para pasarle el Ambiente -->
         <input style="display:none;" type="text" name="Ambiente" value="<?php echo $ambienteFiltrado ?>">
 
         <div class="accordion accordion-flush" id="accordionFlushExample">
+        <!-- Marca -->
             <div class="accordion-item">
                 <h3 class="accordion-header" id="flush-headingOne">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                    Marca
+                    Marcas
                     </button>
                 </h3>
-                <div id="flush-collapseOne" class="accordion-collapse show" aria-labelledby="flush-headingOne">
+                <div id="flush-collapseOne" class="accordion-collapse collapse show" aria-labelledby="flush-headingOne">
                     <div class="accordion-body">
                         <?php
                         // Para que los checkboxes queden seleccionados
@@ -89,7 +90,7 @@ if(isset($_GET['Ambiente'])){
                             }
                         ?>   
                         <!-- Cuando seleccione mas de uno lo manda como un array -->
-                        <div class="form-check d-flex marca">
+                        <div class="form-check d-flex mb-2 marca">
                             <label class="form-check-label w-100" for="<?php echo $unCheckMarca[0]?>"><?php echo $unCheckMarca[0]?></label>
                             <input class="form-check-input" type="checkbox" value="<?php echo $unCheckMarca[0]?>" name="Marca[]" id="<?php echo $unCheckMarca[0]?>" <?php echo $checked ?>>
                         </div>
@@ -99,15 +100,15 @@ if(isset($_GET['Ambiente'])){
                     </div>
                 </div>
             </div>
-            <div class="accordion-item>
+            <div class="accordion-item">
                 <h3 class="accordion-header" id="flush-headingTwo">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        Color
+                        Colores
                     </button>
                 </h3>
-                <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo">
                     <div class="accordion-body color-body">
-                        <!-- Form para Color -->
+                        <!-- Color -->
                         <?php
 
                         // Para que los checkboxes queden seleccionados
@@ -135,73 +136,94 @@ if(isset($_GET['Ambiente'])){
                     </div>
                 </div>
             </div>
+            <!-- Materiales -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        Materiales
+                    </button>
+                </h3>
+                <div id="flush-collapseThree" class="accordion-collapse collapse show" aria-labelledby="flush-headingThree">
+                    <div class="accordion-body">
+                    <?php
+                        // Para que los checkboxes queden seleccionados
+                        $checkMaterialesSeleccionados = array();
+                        if (isset($_GET['Material'])) {
+                            $checkMaterialesSeleccionados = $_GET['Material'];
+                        }
+
+                        while ($unCheckMaterial=mysqli_fetch_array($resultMateriales)) {
+                            $checked = "";
+                            if(in_array($unCheckMaterial[0], $checkMaterialesSeleccionados)) {
+                                $checked = "checked";
+                            }
+                            ?>   
+                            <div class="form-check d-flex mb-2 material">
+                                <label class="form-check-label w-100" for="<?php echo $unCheckMaterial[1]?>"><?php echo $unCheckMaterial[1]?></label>
+                                <input class="form-check-input" type="checkbox" value="<?php echo $unCheckMaterial[0]?>" name="Material[]" id="<?php echo $unCheckMaterial[1]?>" <?php echo $checked ?>>  
+                            </div>
+                            <?php 
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <!-- Estilo -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="flush-headingFour">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                        Estilos
+                    </button>
+                </h3>
+                <div id="flush-collapseFour" class="accordion-collapse collapse show" aria-labelledby="flush-headingFour">
+                    <div class="accordion-body">
+                    <?php
+                    // Para que los checkboxes queden seleccionados
+                    $checkEstilosSeleccionados = array();
+                    if (isset($_GET['Estilo'])) {
+                        $checkEstilosSeleccionados = $_GET['Estilo'];
+                    }
+
+                    foreach($estilosCheck as $unEstilos) {
+                        $checked = "";
+                        if(in_array($unEstilos, $checkEstilosSeleccionados)) {
+                            $checked = "checked";
+                        }
+                    ?>
+                    <div class="form-check d-flex mb-2 estilo">
+                        <label class="form-check-label w-100" for="<?php echo $unEstilos?>"><?php echo $unEstilos?></label>
+                        <input class="form-check-input" type="checkbox" value="<?php echo $unEstilos?>" name="Estilo[]" id="<?php echo $unEstilos?>" <?php echo $checked ?>>
+                    </div>
+                    <?php 
+                    }
+                    ?>
+                    </div>
+                </div>
+            </div>
+            <!-- Precio -->
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="panelsStayOpen-headingFive">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFive" aria-expanded="false" aria-controls="panelsStayOpen-collapseFive">
+                        Precio
+                    </button>
+                </h3>
+                <div id="panelsStayOpen-collapseFive" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingFive">
+                    <div class="accordion-body precio">
+                        <?php 
+                        // Para que el precio quede visible
+                        $precioMinimo="";
+                        $precioMaximo="";
+                        if(isset($_GET['precioMinimo']))
+                        {
+                            $precioMinimo=$_GET['precioMinimo'];
+                            $precioMaximo=$_GET['precioMaximo'];
+                        }
+                        ?>
+                        <input class="mb-3" type="number" name="precioMinimo" id="precioMinimo" placeholder="Mínimo" value="<?php echo $precioMinimo?>">
+                        <input type="number" name="precioMaximo" id="precioMaximo" placeholder="Máximo" value="<?php echo $precioMaximo?>">
+                    </div>
+                </div>
+            </div>
         </div>
-
-
-        <!-- Form para Materiales -->
-    
-        <h4>Material</h4>
-        <?php
-        // Para que los checkboxes queden seleccionados
-        $checkMaterialesSeleccionados = array();
-        if (isset($_GET['Material'])) {
-            $checkMaterialesSeleccionados = $_GET['Material'];
-        }
-
-        while ($unCheckMaterial=mysqli_fetch_array($resultMateriales)) {
-            $checked = "";
-            if(in_array($unCheckMaterial[0], $checkMaterialesSeleccionados)) {
-                $checked = "checked";
-            }
-            ?>   
-                <input type="checkbox" value="<?php echo $unCheckMaterial[0]?>" name="Material[]" id="<?php echo $unCheckMaterial[1]?>" <?php echo $checked ?>>
-                <label for="<?php echo $unCheckMaterial[1]?>"><?php echo $unCheckMaterial[1]?></label>
-            <?php 
-        }
-        ?>
-
-        <hr>
-
-        <!-- Form para Estilos -->
-    
-        <h4>Estilo</h4>
-        <?php
-        // Para que los checkboxes queden seleccionados
-        $checkEstilosSeleccionados = array();
-        if (isset($_GET['Estilo'])) {
-            $checkEstilosSeleccionados = $_GET['Estilo'];
-        }
-
-        foreach($estilosCheck as $unEstilos) {
-            $checked = "";
-            if(in_array($unEstilos, $checkEstilosSeleccionados)) {
-                $checked = "checked";
-            }
-        ?>
-            <input type="checkbox" value="<?php echo $unEstilos?>" name="Estilo[]" id="<?php echo $unEstilos?>" <?php echo $checked ?>>
-            <label for="<?php echo $unEstilos?>"><?php echo $unEstilos?></label>
-        <?php 
-        }
-        ?>
-
-        <hr>
-
-        <!-- Form para Precio -->
-
-        <?php 
-        // Para que el precio quede visible
-        $precioMinimo="";
-        $precioMaximo="";
-        if(isset($_GET['precioMinimo']))
-        {
-            $precioMinimo=$_GET['precioMinimo'];
-            $precioMaximo=$_GET['precioMaximo'];
-        }
-        ?>
-
-        <h4>Precio</h4>
-        <input type="number" name="precioMinimo" id="precioMinimo" placeholder="Mínimo" value="<?php echo $precioMinimo?>">
-        <input type="number" name="precioMaximo" id="precioMaximo" placeholder="Máximo" value="<?php echo $precioMaximo?>">
-
-        <input type="submit" value="Filtrar" name="filtrarTodo">
+        <input class="btn btn-terciary mt-4" type="submit" value="Filtrar" name="filtrarTodo">
     </form>   

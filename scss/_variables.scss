@@ -7,10 +7,14 @@ $black: #333333;
 $white: #ffffff;
 $ligth-celeste: #8ACEDD;
 $dark-celeste: #92BCC6;
-$dark-secondarybtn: darken($dark-celeste, 10%);
+$darken-celeste: darken($dark-celeste, 10%);
 $accordion-border-color: $black;
 $accordion-button-active-color: $black;
 $accordion-button-active-bg: $white;
 $form-check-input-checked-bg-color: $ligth-celeste;
 $form-check-input-focus-border: $ligth-celeste;
+$input-focus-border-color: $black;
+$input-focus-color: $black;
+
+
 $form-check-input-width: 1.2em;
