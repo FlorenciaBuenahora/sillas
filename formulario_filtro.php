@@ -99,14 +99,14 @@ if(isset($_GET['Ambiente'])){
                     </div>
                 </div>
             </div>
-            <div class="accordion-item">
+            <div class="accordion-item>
                 <h3 class="accordion-header" id="flush-headingTwo">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                         Color
                     </button>
                 </h3>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse show" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
+                    <div class="accordion-body color-body">
                         <!-- Form para Color -->
                         <?php
 

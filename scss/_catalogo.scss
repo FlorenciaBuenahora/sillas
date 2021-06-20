@@ -17,11 +17,14 @@
     border-color: transparent;
     box-shadow: none;
 }
+.color-body {
+    padding-right: 0;
+}
 .color {
     padding-left: 0;
 
     .form-check-input {
-        width: 5.2em;
+        width: 4.4em;
         height: 1.5em;
     }
 }
