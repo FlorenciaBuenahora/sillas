@@ -28,6 +28,20 @@ body {
     }
 }
 
+.prod-nuevo {
+    position: relative;
+
+    .etiqueta-nuevo {
+        position: absolute;
+        top: -162px;
+        left: 8%;
+        color: $white;
+        font-weight: 600;
+        background-color: $light-celeste;
+        padding: 5px 15px;
+    }
+}
+
 .nosotros-blurb {
     p {
         max-width: 610px;
@@ -38,7 +52,15 @@ body {
         color: $black;
 
         &:hover {
-            color: $ligth-celeste;
+            color: $light-celeste;
         }
+    }
+}
+
+// Ampliacion
+.breadcrumb {
+    a {
+        color: $light-celeste;
+        text-decoration: none;
     }
 }

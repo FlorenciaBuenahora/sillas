@@ -6,7 +6,7 @@ include("conexion.php");
 $ambienteSeleccionado=$_GET['Ambiente'];
 
 // Le digo que quiero mostrar los que cumplen con el Ambiente seleccionado y un LIKE para que no ignore las sillas versátiles
-$querySillasPorAmbiente="SELECT DISTINCT S.ID, S.Nombre, S.Precio, S.Ambiente FROM sillas AS S
+$querySillasPorAmbiente="SELECT DISTINCT S.ID, S.Nombre, S.Precio, S.Ambiente, S.Nuevo FROM sillas AS S
 INNER JOIN sillasMateriales AS SM ON S.ID = SM.IDSilla 
 INNER JOIN colores AS C ON C.ID = S.Color
 WHERE Ambiente LIKE '%$ambienteSeleccionado%'";
@@ -48,8 +48,16 @@ include("nav.php");
         <div class="col-md-8 col-lg-10 row mt-4 mt-md-0 ms-md-auto prod">
             <?php
                 while($sillaFiltrada=mysqli_fetch_array($resultSillasPorAmbiente)){
+                    $productoNuevo = "";
+                    if($sillaFiltrada['Nuevo'] == 1) {
+                        $productoNuevo = 'prod-nuevo';
+                    }
                     echo "<div class='col-md-6 col-lg-4 mb-3'>";
-                        echo "<a href='ampliacion.php?ID=$sillaFiltrada[ID]&Ambiente=$ambienteSeleccionado'>";
+                        echo "<a class='$productoNuevo' href='ampliacion.php?ID=$sillaFiltrada[ID]&Ambiente=$ambienteSeleccionado'>";
+                        if($sillaFiltrada['Nuevo'] == 1) {
+                            echo "<div class='etiqueta-nuevo'>Nuevo</div>";
+                        }
+                            
                             echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
                             echo "<h2>$sillaFiltrada[Nombre]</h2>";
                             echo "<p>USD $sillaFiltrada[Precio]</p>";

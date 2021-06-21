@@ -50,7 +50,8 @@ $resultDestacados=mysqli_query($link, $queryDestacados);
                             }
                             echo "<div class='carousel-item $active'>";
                                 echo "<div class='col-md-6 col-lg-3'>";
-                                    echo "<a href='ampliacion.php?ID=$unNuevo[ID]'>";
+                                    echo "<a class='prod-nuevo' href='ampliacion.php?ID=$unNuevo[ID]'>";
+                                        echo "<div class='etiqueta-nuevo'>Nuevo</div>";
                                         echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
                                         echo "<h2>$unNuevo[Nombre]</h2>";
                                         echo "<p>USD $unNuevo[Precio]</p>";
