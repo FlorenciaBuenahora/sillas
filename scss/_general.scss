@@ -64,3 +64,24 @@ body {
         text-decoration: none;
     }
 }
+
+.producto {
+    a {
+        color: $black;
+        text-decoration: none;
+    }
+    h2 {
+        font-size: 20px;
+        margin: 12px 0;
+    }
+    p {
+        font-weight: 600;
+    }
+}
+
+// Buscador
+.resultadoBuscador {
+    h1 {
+        font-size: 24px;
+    }
+}

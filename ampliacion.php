@@ -69,20 +69,20 @@ $resultSimilares = mysqli_query($link, $querySimilares);
         </nav>
         <div class="row">
             <div class="col-lg-8 row">
-                <div class="col-lg-6">
+                <div class="col-md-6">
                     <img class="img-fluid" src="assets/img/sillas/dummy.jpeg" alt="Dummy">
                 </div>
-                <div class="col-lg-6">
+                <div class="col-md-6 mt-4 mt-md-0">
                     <img class="img-fluid" src="assets/img/sillas/dummy2.jpeg" alt="Dummy">
                 </div>
-                <div class="col-lg-6 mt-4">
+                <div class="col-md-6 mt-4">
                     <img class="img-fluid" src="assets/img/sillas/dummy3.jpeg" alt="Dummy">
                 </div>
-                <div class="col-lg-6 mt-4">
+                <div class="col-md-6 mt-4">
                     <img class="img-fluid" src="assets/img/sillas/dummy4.jpeg" alt="Dummy">
                 </div>
             </div>
-            <div class="col-lg-4 prod-info">
+            <div class="col-lg-4 prod-info mt-3 mt-lg-0">
                 <span>Código: <?php echo $unaSilla[Codigo]?></span>
                 <h1 class="mt-2"><?php echo $unaSilla['Nombre']?></h1>
                 <h2 class="mt-4">USD <?php echo $unaSilla[Precio]?></h2>
@@ -106,26 +106,49 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                         <a class="btn btn-primary px-6" href="#" role="button">Agregar al carrito</a>
                     </div>
                 </div>
-                <h3 class="mt-3">Características</h3>
+                <h4 class="mt-4">Características</h4>
                 <p>Marca: <?php echo $unaSilla['Marca']?></p>
                 <p>Medidas: <?php echo $unaSilla['Medidas']?></p>
                 <p>Material: <?php echo $stringMateriales?></p>
                 <p>Ambiente: <?php echo $unaSilla['Ambiente']?></p>
                 <p>Estilo: <?php echo $unaSilla['Estilo']?></p>
+                <h3 class="mt-4">Envío y Costo</h3>
+                <p>Montevideo:<br>
+                Envíos gratis en compras de más de USD 200. Costo regular: USD 10.
+                </p>
+                <p>Interior:<br>
+                Envíos desde USD17 dependiendo del tamaño y peso del pedido.
+                </p>
+
             </div>
         </div>
 
-        
+        <section class="similares mt-5">
+            <h3 class="text-center mb-4">Productos similares</h3>
+            <div class="row">
+                <?php
+                while($sillaSimilar=mysqli_fetch_array($resultSimilares)){
 
-        <h3>Productos similares</h3>
-        <?php
-            while($sillaSimilar=mysqli_fetch_array($resultSimilares)){
-                echo "<div>";
-                echo "<h3><a href='ampliacion.php?ID=$sillaSimilar[ID]&Ambiente=$ambienteFiltrado'>$sillaSimilar[Nombre]</a></h3>";
-                echo "<p>USD $sillaSimilar[Precio]</p>";
-                echo "</div>";
-            }
-        ?>
+                    $productoNuevo = "";
+                        if($sillaSimilar['Nuevo'] == 1) {
+                            $productoNuevo = 'prod-nuevo';
+                        }
+                        echo "<div class='col-md-6 col-lg-3 producto'>";
+                            echo "<a class='$productoNuevo' href='ampliacion.php?ID=$sillaSimilar[ID]&Ambiente=$ambienteFiltrado'>";
+                            if($sillaSimilar['Nuevo'] == 1) {
+                                echo "<div class='etiqueta-nuevo'>Nuevo</div>";
+                            }
+                                
+                                echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
+                                echo "<h2>$sillaSimilar[Nombre]</h2>";
+                                echo "<p>USD $sillaSimilar[Precio]</p>";
+                            echo "</a>";
+                        echo "</div>";
+                }
+            ?>
+        </div>
+        </section>
     </div>
+    <?php include "footer.php";?>
 </body>
 </html>
