@@ -106,7 +106,7 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                         <a class="btn btn-primary px-6" href="#" role="button">Agregar al carrito</a>
                     </div>
                 </div>
-                <h4 class="mt-4">Características</h4>
+                <h3 class="mt-4">Características</h3>
                 <p>Marca: <?php echo $unaSilla['Marca']?></p>
                 <p>Medidas: <?php echo $unaSilla['Medidas']?></p>
                 <p>Material: <?php echo $stringMateriales?></p>
