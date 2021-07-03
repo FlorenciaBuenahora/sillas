@@ -7,14 +7,24 @@
     <title>Contacto</title>
 </head>
 <body>
-    <form action="procesarContacto.php" method="GET">
-    <label for="nombre">Nombre</label>
-    <input id="nombre" name="nombre" type="text">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email">
-    <label for="mensaje">Mensaje</label>
-    <textarea name="mensaje" id="mensaje"></textarea>
-    <input type="submit" value="Enviar">
-    </form>
+
+        <form action="procesarContacto.php" method="GET" class="row g-2">
+            <div class="col-lg-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" name="nombre" class="form-control">
+            </div>
+            <div class="col-lg-6 mb-3">
+                <label for="nombre" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control">
+            </div>
+            <div class="col-12">
+                <label for="mensaje" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="mensaje" name="mensaje" style="height: 100px"></textarea>
+            </div>
+            <div class="col mt-3 d-flex justify-content-end">
+                <input type="submit" value="Enviar" role="button" class="btn btn-primary px-6">
+            </div>
+        </form>
+    
 </body>
 </html>

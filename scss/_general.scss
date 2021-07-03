@@ -17,6 +17,17 @@ body {
         background-color: $darken-celeste;
     }
 }
+.btn-primary {
+    border: 1px solid $light-celeste;
+    background-color: $light-celeste;
+    font-weight: 600;
+    margin-left: 10px;
+
+    &:hover {
+        background-color: $darken-celeste;
+        border-color: $darken-celeste;
+    }
+}
 
 // Inicio
 .portada {

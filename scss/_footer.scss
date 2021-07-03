@@ -45,4 +45,12 @@ footer {
             font-size: 14px;
         }
     }
+
+    .modal {
+        input[type=text], input[type=email], textarea {
+            background-color: transparent;
+            border-color: $black;
+            border-radius: 0;
+        }
+    }
 }
