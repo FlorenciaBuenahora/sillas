@@ -1,7 +1,24 @@
 <?php
 include("../conexion.php");
 
-$queryListaSillas = "SELECT Codigo, Nombre, Precio, Marca, Ambiente from sillas";
+$queryListaSillas = "SELECT ID, Nombre, Precio, Marca, Ambiente from sillas";
+
+// Si orden esta seteado
+if(isset($_GET['orden'])) {
+    $orden = $_GET['orden'];
+    switch ($orden) {
+        // Si el valor es nombre:
+        case 'Nombre':
+            $queryListaSillas = $queryListaSillas." ORDER BY Nombre";
+            break;
+            
+        // Si el valor es precio:
+        case 'Precio':
+            $queryListaSillas = $queryListaSillas." ORDER BY Precio";
+            break;
+    }
+}
+
 $resultListaSillas = mysqli_query($link, $queryListaSillas);
 // var_dump ($resultListaSillas);
 ?>
@@ -17,14 +34,16 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
     <title>Sillas</title>
 </head>
 <body>
+    <h1>Listado de Sillas</h1>
     <table class="table">
         <thead class="table-light">
             <tr>
-                <th scope="col">Código</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Precio</th>
+                <th scope="col">ID</th>
+                <th scope="col"><a href="sillas.php?orden=Nombre">Nombre</a></th>
+                <th scope="col"><a href="sillas.php?orden=Precio">Precio</a></th>
                 <th scope="col">Marca</th>
                 <th scope="col">Ambiente</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -36,11 +55,12 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
             <?php
                 while($unaSilla=mysqli_fetch_array($resultListaSillas)) {
                     echo "<tr>";
-                        echo "<td>$unaSilla[Codigo]</td>";
-                        echo "<td>$unaSilla[Nombre]</td>";
+                        echo "<td>$unaSilla[ID]</td>";
+                        echo "<td><a href='../ampliacion.php?ID=$unaSilla[ID]' target='_blank'>$unaSilla[Nombre]</a></td>";
                         echo "<td>USD $unaSilla[Precio]</td>";
                         echo "<td>$unaSilla[Marca]</td>";
-                        echo "<td>$unaSilla[Ambiente]</td>";       
+                        echo "<td>$unaSilla[Ambiente]</td>";
+                        echo "<td>Eliminar</td>";        
                     echo "</tr>";
                 }
             ?>
