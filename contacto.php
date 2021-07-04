@@ -34,7 +34,8 @@
                 <input type="submit" value="Enviar" role="button" class="btn btn-primary px-6">
             </div>
         </form>
-    
+
+        <!-- Script validar -->
         <script>
                     // Example starter JavaScript for disabling form submissions if there are invalid fields
             (function () {
