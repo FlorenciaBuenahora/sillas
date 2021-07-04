@@ -1,7 +1,32 @@
 <?php
 include("../conexion.php");
 
-$queryListaSillas = "SELECT ID, Nombre, Precio, Marca, Ambiente from sillas";
+// Mensajes
+$textoMensaje = "";
+$clase = "";
+if(isset($_GET['mensaje'])) {
+    $mensaje = $_GET['mensaje'];
+    switch ($mensaje) {
+        case "eliminadoOk"; {
+            $textoMensaje = "Se ha eliminado una silla";
+            $clase = "correcto";
+            break;
+        }
+        case "eliminadoMal"; {
+            $textoMensaje = "No se ha eliminado una silla";
+            $clase = "error";
+            break;
+        }
+        case "IDMal"; {
+            $textoMensaje = "Debes seleccionar una silla para eliminarla";
+            $clase = "error";
+            break;
+        }
+    }
+}
+
+// Consulta listado sillas
+$queryListaSillas = "SELECT ID, Nombre, Precio, Marca, Ambiente FROM sillas";
 
 // Si orden esta seteado
 if(isset($_GET['orden'])) {
@@ -34,7 +59,12 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
     <title>Sillas</title>
 </head>
 <body>
-    <h1>Listado de Sillas</h1>
+    <!-- Mensajes -->
+    <p class="mensaje<?php echo $clase?>"><?php echo $textoMensaje?></p>
+
+    <!-- Listado sillas -->
+    <h1>Sillas</h1>
+    <a class="btn btn-primary px-6" href="agregarSilla.php" role="button">Agregar silla</a>
     <table class="table">
         <thead class="table-light">
             <tr>
@@ -60,7 +90,7 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
                         echo "<td>USD $unaSilla[Precio]</td>";
                         echo "<td>$unaSilla[Marca]</td>";
                         echo "<td>$unaSilla[Ambiente]</td>";
-                        echo "<td>Eliminar</td>";        
+                        echo "<td><a href='eliminar.php?ID=$unaSilla[ID]'>Eliminar</a></td>";        
                     echo "</tr>";
                 }
             ?>
