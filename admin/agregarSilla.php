@@ -1,8 +1,25 @@
 <?php
 include("../conexion.php");
 
-$querySillas = "SELECT DISTINCT Marca FROM sillas";
-$resultSillas = mysqli_query($link, $querySillas);
+// Consulta Marca
+$queryMarca = "SELECT DISTINCT Marca FROM sillas";
+$resultMarca = mysqli_query($link, $queryMarca);
+
+// Consulta Ambiente
+$queryAmbiente = "SELECT * FROM ambientes";
+$resultAmbiente = mysqli_query($link, $queryAmbiente);
+
+// Consulta Color
+
+// Consulta Material
+
+// Consulta Estilo
+$queryEstilo = "SELECT * FROM estilos";
+$resultEstilo = mysqli_query($link, $queryEstilo);
+
+// Consulta Destacado
+
+// Consulta Nuevo
 
 ?>
 
@@ -26,7 +43,8 @@ $resultSillas = mysqli_query($link, $querySillas);
 <body>
     <div class="container">
         <h1>Nueva silla</h1>
-        <form action="" class="row g-3 needs-validation" novalidate>
+        <form action="insertar.php" class="row g-3 needs-validation" novalidate>
+
             <!-- Codigo -->
             <div class="col-md-6">
                 <label for="codigo" class="form-label">Código</label>
@@ -48,18 +66,14 @@ $resultSillas = mysqli_query($link, $querySillas);
             <!-- Ambiente -->
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Ambiente</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="ambiente1" value="option1">
-                    <label class="form-check-label" for="ambiente1">Comedor</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="ambiente2" value="option2">
-                    <label class="form-check-label" for="ambiente2">Exterior</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="ambiente3" value="option3">
-                    <label class="form-check-label" for="ambiente3">Escritorio</label>
-                </div>
+                <?php 
+                    while($unAmbiente = mysqli_fetch_array($resultAmbiente)) {
+                        echo "<div class='form-check form-check-inline'>";
+                            echo "<input class='form-check-input' name='Ambiente[]' type='checkbox' id='$unAmbiente[1]' value='$unAmbiente[1]'>";
+                            echo "<label class='form-check-label' for='$unAmbiente[1]'>$unAmbiente[1]</label>";
+                        echo "</div>";
+                    }
+                ?>
                 <div class="invalid-feedback">
                     Por favor seleccione al menos un ambiente
                 </div>
@@ -71,15 +85,10 @@ $resultSillas = mysqli_query($link, $querySillas);
                 <select class="form-select" required>
                     <option selected>Selecciona una marca</option>
                     <?php 
-                        while($unaMarca = mysqli_fetch_array($resultSillas)) {
+                        while($unaMarca = mysqli_fetch_array($resultMarca)) {
                             echo "<option value='$unaMarca[Marca]'>$unaMarca[Marca]</option>";
                         }
                     ?>
-                
-                    <!-- <option selected>Selecciona una marca</option>
-                    
-                    <option value="2">La Ibérica</option>
-                    <option value="3">Mad for Modern</option> -->
                 </select>
                 <div class="invalid-feedback">
                     Por favor ingresa el codigo
@@ -143,14 +152,23 @@ $resultSillas = mysqli_query($link, $querySillas);
             <!-- Estilo -->
             <div class="col-md-6 mb-3">
                 <label for="" class="mb-2">Estilo</label><br>
-                <div class="form-check form-check-inline">
+                <?php 
+                    while($unEstilo = mysqli_fetch_array($resultEstilo)) {
+                        echo "<div class='form-check form-check-inline'>";
+                            echo "<input class='form-check-input' name='Estilo[]' type='checkbox' id='$unEstilo[1]' value='$unEstilo[1]'>";
+                            echo "<label class='form-check-label' for='$unEstilo[1]'>$unEstilo[1]</label>";
+                        echo "</div>";
+                    }
+                ?>       
+
+                <!-- <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="estilo1" value="option1">
                     <label class="form-check-label" for="estilo1">Colonial</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" id="Moderno" value="option2">
                     <label class="form-check-label" for="estilo2">Acero Inoxidable</label>
-                </div>
+                </div> -->
                 <div class="invalid-feedback">
                     Por favor selecciona al menos un estilo
                 </div>
