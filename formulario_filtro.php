@@ -8,16 +8,16 @@
 
 
 // Query Marcas
-$queryMarcas = "SELECT DISTINCT Marca FROM sillas ORDER BY Marca ASC";
+$queryMarcas = "SELECT ID, NombreMarca FROM marcas ORDER BY NombreMarca";
 $resultMarcas = mysqli_query($link, $queryMarcas);
 
 // Query Color
 // $queryColor = "SELECT DISTINCT Color FROM sillas ORDER BY CAST(Color AS CHAR)";
-$queryColor = "SELECT ID, Nombre, Codigo FROM colores";
+$queryColor = "SELECT ID, Nombre, Codigo FROM colores ORDER BY Nombre";
 $resultColor = mysqli_query($link, $queryColor);
 
 // Query Materiales
-$queryMateriales = "SELECT ID, Nombre FROM materiales";
+$queryMateriales = "SELECT ID, Nombre FROM materiales ORDER By Nombre";
 $resultMateriales = mysqli_query($link, $queryMateriales);
 
 // $materialesSelect = array();
@@ -37,21 +37,9 @@ $resultMateriales = mysqli_query($link, $queryMateriales);
 // }
 
 // Query Estilos
-$queryEstilos = "SELECT DISTINCT Estilo FROM sillas ORDER BY CAST(Estilo AS CHAR)";
+$queryEstilos = "SELECT DISTINCT E.ID, E.NombreEstilo FROM estilos AS E ORDER BY E.NombreEstilo";
 $resultEstilos = mysqli_query($link, $queryEstilos);
 
-$estilosCheck = array();
-
-while($unEstilo=mysqli_fetch_array($resultEstilos)) {
-    // var_dump($unEstilo[0]);
-    $arrayEstilos = explode(",", "$unEstilo[0]");
-    foreach($arrayEstilos as $unValorEstilo) {
-        if(!in_array($unValorEstilo, $estilosCheck)) {
-            array_push($estilosCheck, $unValorEstilo);
-        }
-    }
-
-}
 
 // Checkear el último ambiente seleccionado
 $ambienteFiltrado = "";
@@ -91,7 +79,7 @@ if(isset($_GET['Ambiente'])){
                         ?>   
                         <!-- Cuando seleccione mas de uno lo manda como un array -->
                         <div class="form-check d-flex mb-2 marca">
-                            <label class="form-check-label w-100" for="<?php echo $unCheckMarca[0]?>"><?php echo $unCheckMarca[0]?></label>
+                            <label class="form-check-label w-100" for="<?php echo $unCheckMarca[0]?>"><?php echo $unCheckMarca[1]?></label>
                             <input class="form-check-input" type="checkbox" value="<?php echo $unCheckMarca[0]?>" name="Marca[]" id="<?php echo $unCheckMarca[0]?>" <?php echo $checked ?>>
                         </div>
                         <?php 
@@ -184,15 +172,15 @@ if(isset($_GET['Ambiente'])){
                         $checkEstilosSeleccionados = $_GET['Estilo'];
                     }
 
-                    foreach($estilosCheck as $unEstilos) {
+                    while ($unCheckEstilo =mysqli_fetch_array($resultEstilos)) {
                         $checked = "";
-                        if(in_array($unEstilos, $checkEstilosSeleccionados)) {
+                        if(in_array($unCheckEstilo[0], $checkEstilosSeleccionados)) {
                             $checked = "checked";
                         }
                     ?>
                     <div class="form-check d-flex mb-2 estilo">
-                        <label class="form-check-label w-100" for="<?php echo $unEstilos?>"><?php echo $unEstilos?></label>
-                        <input class="form-check-input" type="checkbox" value="<?php echo $unEstilos?>" name="Estilo[]" id="<?php echo $unEstilos?>" <?php echo $checked ?>>
+                        <label class="form-check-label w-100" for="<?php echo $unCheckEstilo[1]?>"><?php echo $unCheckEstilo[1]?></label>
+                        <input class="form-check-input" type="checkbox" value="<?php echo $unCheckEstilo[0]?>" name="Estilo[]" id="<?php echo $unCheckEstilo[1]?>" <?php echo $checked ?>>
                     </div>
                     <?php 
                     }

@@ -26,7 +26,8 @@ if(isset($_GET['mensaje'])) {
 }
 
 // Consulta listado sillas
-$queryListaSillas = "SELECT ID, Nombre, Precio, Marca, Ambiente FROM sillas";
+$queryListaSillas = "SELECT S.ID, S.Nombre, S.Precio, M.NombreMarca AS Marca FROM sillas AS S
+                    INNER JOIN marcas AS M ON M.ID = S.Marca";
 
 // Si orden esta seteado
 if(isset($_GET['orden'])) {
@@ -72,7 +73,7 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
                 <th scope="col"><a href="sillas.php?orden=Nombre">Nombre</a></th>
                 <th scope="col"><a href="sillas.php?orden=Precio">Precio</a></th>
                 <th scope="col">Marca</th>
-                <th scope="col">Ambiente</th>
+                <!-- <th scope="col">Ambiente</th> -->
                 <th scope="col"></th>
             </tr>
         </thead>

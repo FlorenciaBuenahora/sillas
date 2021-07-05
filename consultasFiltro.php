@@ -35,23 +35,32 @@ if(isset($_GET['filtrarTodo'])) {
 
     if(isset($_GET['Marca'])) {
         $marcaSeleccionada=$_GET['Marca'];
-        $textoMarcasIN="";
+        $stringFiltro="";
         // Se le asigna al array el valor de las marcas
 
-        // Recorrer marcas para generar el string de IN
+        // Recorrer marcas para generar el string de filtro
         foreach($marcaSeleccionada as $unaMarca){
-            // Si marca es el ultimo elemento de la array
-            if($unaMarca === end($marcaSeleccionada))
-            // No agrega coma
-            {
-                $textoMarcasIN = $textoMarcasIN ."'". $unaMarca. "'";  
+            // Se verifica si se a seleccionado mas de un elemento
+            if(count($marcaSeleccionada) > 1){
+                // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
+                if($unaMarca === $marcaSeleccionada[0]){
+                    $stringFiltro = $stringFiltro ." AND (M.ID = $unaMarca";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else if($unaMarca === end($marcaSeleccionada)){
+                    $stringFiltro = $stringFiltro ." OR M.ID = $unaMarca)";
+                }
+                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                else{
+                    $stringFiltro = $stringFiltro ." OR M.ID = $unaMarca";
+                }
             }
-            //Sino es el ultimo le agrega una coma
+            // En caso de que el array solo tenga 1 elemento
             else{
-                $textoMarcasIN = $textoMarcasIN ."'".  $unaMarca."',";
+                $stringFiltro = $stringFiltro ." AND (M.ID = $unaMarca)";
             }
         }
-        $querySillasPorAmbiente=$querySillasPorAmbiente. " AND (Marca IN ($textoMarcasIN))";
+        $querySillasPorAmbiente=$querySillasPorAmbiente. $stringFiltro;
     }
 
     // Material
@@ -130,20 +139,20 @@ if(isset($_GET['filtrarTodo'])) {
 
                 // En caso de ser el primer elemento, se agregara la condicional AND a la query de filtros
                 if($unEstilo === $estiloSeleccionado[0]){
-                    $stringFiltro = $stringFiltro ." AND (Estilo LIKE '%$unEstilo%'";
+                    $stringFiltro = $stringFiltro ." AND (SE.IDEstilo LIKE '%$unEstilo%'";
                 }
                 // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
                 else if($unEstilo === end($estiloSeleccionado)){
-                    $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%')";
+                    $stringFiltro = $stringFiltro ." OR SE.IDEstilo LIKE '%$unEstilo%')";
                 }
                 // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
                 else{
-                    $stringFiltro = $stringFiltro ." OR Estilo LIKE '%$unEstilo%'";
+                    $stringFiltro = $stringFiltro ." OR SE.IDEstilo LIKE '%$unEstilo%'";
                 }
             }
             // En caso de que el array solo tenga 1 elemento
             else{
-                $stringFiltro = $stringFiltro ." AND (Estilo LIKE '%$unEstilo%')"; 
+                $stringFiltro = $stringFiltro ." AND (SE.IDEstilo LIKE '%$unEstilo%')"; 
             }
         }
         $querySillasPorAmbiente = $querySillasPorAmbiente. $stringFiltro;

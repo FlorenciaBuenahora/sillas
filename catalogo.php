@@ -5,17 +5,26 @@ include("conexion.php");
 // Toma el dato enviado por GET de la url
 $ambienteSeleccionado=$_GET['Ambiente'];
 
-// Le digo que quiero mostrar los que cumplen con el Ambiente seleccionado y un LIKE para que no ignore las sillas versátiles
-$querySillasPorAmbiente="SELECT DISTINCT S.ID, S.Nombre, S.Precio, S.Ambiente, S.Nuevo FROM sillas AS S
+$queryNombreAmbientePorId = "SELECT DISTINCT A.NombreAmbiente FROM ambientes AS A WHERE A.ID = $ambienteSeleccionado";
+$resultNombreAmbientePorId = mysqli_query($link,$queryNombreAmbientePorId);
+
+
+// Se crea la query principal de filtro agregandole como filtro principal el ambiente seleccionado
+$querySillasPorAmbiente="SELECT DISTINCT S.ID, S.Nombre, S.Precio, S.Nuevo FROM sillas AS S
 INNER JOIN sillasMateriales AS SM ON S.ID = SM.IDSilla 
+INNER JOIN sillasAmbientes AS SA ON S.ID = SA.IDSilla
+INNER JOIN sillasEstilos AS SE ON S.ID = SE.IDSilla
 INNER JOIN colores AS C ON C.ID = S.Color
-WHERE Ambiente LIKE '%$ambienteSeleccionado%'";
+INNER JOIN marcas AS M ON M.ID = S.Marca
+WHERE SA.IDAmbiente = $ambienteSeleccionado";
 
 include("consultasFiltro.php");
 
-
-// echo $querySillasPorAmbiente;
-
+// Para mostrar el h1 nombre del ambiente en el sidebar
+$ambienteNombreSeleccionado = "";
+while($sillaFiltrada=mysqli_fetch_array($resultNombreAmbientePorId)){
+    $ambienteNombreSeleccionado = $sillaFiltrada['NombreAmbiente'];
+}
 
 $resultSillasPorAmbiente=mysqli_query($link, $querySillasPorAmbiente);
 
@@ -41,7 +50,7 @@ include("nav.php");
 <div class="container mt-4">
     <div class="row align-items-start">
         <aside class="col-md-4 col-lg-2">
-            <?php echo "<h1 class='titulo-catalogo'>Sillas de $ambienteSeleccionado</h1>"; 
+            <?php echo "<h1 class='titulo-catalogo'>Sillas de $ambienteNombreSeleccionado</h1>"; 
             include ("formulario_filtro.php");
             ?>
         </aside>

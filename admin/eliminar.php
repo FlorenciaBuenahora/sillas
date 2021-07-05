@@ -5,7 +5,10 @@ if (isset($_GET['ID'])) {
 
     $idEliminar = $_GET['ID'];
 
-    $queryEliminar = "DELETE FROM sillas WHERE ID=$idEliminar";
+    $queryEliminar = "DELETE FROM sillasAmbientes WHERE IDSilla = $idEliminar
+                    DELETE FROM sillasEstilos WHERE IDSilla = $idEliminar
+                    DELETE FROM sillasMateriales WHERE IDSilla = $idEliminar
+                    DELETE FROM sillas WHERE ID=$idEliminar";
     $resultEliminar = mysqli_query($link, $queryEliminar);
 
     if($resultEliminar) {

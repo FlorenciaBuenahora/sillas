@@ -11,15 +11,37 @@ $unaSilla=mysqli_fetch_array($resultAmpliacion);
 // Paso el ambiente seleccionado para las migas de pan
 $ambienteFiltrado = "";
 $ambienteBreadcrumbs = "";
+$IDAmbienteFiltrado = "";
 $slash = "";
+
 if(isset($_GET['Ambiente'])){
-    $ambienteFiltrado = $_GET['Ambiente'];
+    $IDAmbienteFiltrado = $_GET['Ambiente'];
+
+    $queryNombreAmbientePorId = "SELECT DISTINCT A.NombreAmbiente FROM ambientes AS A WHERE A.ID = $IDAmbienteFiltrado";
+    $resultNombreAmbientePorId = mysqli_query($link,$queryNombreAmbientePorId);
+    
+    while($sillaFiltrada=mysqli_fetch_array($resultNombreAmbientePorId)){
+        $ambienteFiltrado = $sillaFiltrada['NombreAmbiente'];
+    }
+
     $slash = " /";
     $ambienteBreadcrumbs =  $ambienteFiltrado;
 }
-// En caso de que se llegue por el buscador, utilizo el ambiente de la silla y no del nav
-else{
-    $ambienteFiltrado = $unaSilla['Ambiente'];  
+else {
+    $IdSillaFiltrada = $_GET['ID'];
+
+    $queryNombreAmbientePorIdSilla = "SELECT DISTINCT A.ID, A.NombreAmbiente FROM ambientes AS A 
+                                INNER JOIN sillasAmbientes AS SA ON SA.IDAmbiente = A.ID 
+                                WHERE SA.IDSilla = $IdSillaFiltrada
+                                ORDER BY RAND() LIMIT 1";
+
+    $resultNombreAmbientePorIdSilla = mysqli_query($link,$queryNombreAmbientePorIdSilla);
+    
+    while($sillaFiltrada=mysqli_fetch_array($resultNombreAmbientePorIdSilla)){
+        $ambienteFiltrado = $sillaFiltrada['NombreAmbiente'];
+        $IDAmbienteFiltrado = $sillaFiltrada['ID'];
+    }
+
 }
 
 // Materiales complementaria y relacional
@@ -42,8 +64,70 @@ while($Materiales=mysqli_fetch_array($resultMaterialesAmpliacion)) {
     }
 }
 
+// Estilos complementaria y relacional
+$queryEstilosAmpliacion="SELECT DISTINCT NombreEstilo FROM estilos AS E INNER JOIN sillasEstilos AS SE ON SE.IDEstilo = E.ID WHERE SE.IDSilla = $id";
+$resultEstilosAmpliacion=mysqli_query($link, $queryEstilosAmpliacion);
+
+$stringEstilos = "";
+$arrayEstilos = array();
+
+while($Estilos=mysqli_fetch_array($resultEstilosAmpliacion)) {
+    $arrayEstilos = explode(", ", "$Estilos[0]");
+    foreach($arrayEstilos as $estilo){
+        if($estilo === $arrayEstilos[0]){
+            $stringEstilos = $stringEstilos. $estilo;
+        }
+        else{
+            $stringEstilos = ", ".$stringEstilos.$estilo;
+        }
+
+    }
+}
+
+// Marcas complementaria
+$queryMarcasAmpliacion="SELECT DISTINCT NombreMarca FROM marcas AS M INNER JOIN sillas AS S ON S.Marca = M.ID WHERE S.ID = $id";
+$resultMarcasAmpliacion=mysqli_query($link, $queryMarcasAmpliacion);
+
+$stringMarcas = "";
+$arrayMarcas = array();
+
+while($Marcas=mysqli_fetch_array($resultMarcasAmpliacion)) {
+    $arrayMarcas = explode(", ", "$Marcas[0]");
+    foreach($arrayMarcas as $marca){
+        if($marca === $arrayMarcas[0]){
+            $stringMarcas = $stringMarcas. $marca;
+        }
+        else{
+            $stringMarcas = ", ".$stringMarcas.$marca;
+        }
+
+    }
+}
+
+// Ambiente complementaria y relacional
+$queryAmbienteAmpliacion="SELECT DISTINCT NombreAmbiente FROM ambientes AS A INNER JOIN sillasAmbientes AS SA ON SA.IDAmbiente = A.ID WHERE SA.IDSilla = $id";
+$resultAmbienteAmpliacion=mysqli_query($link, $queryAmbienteAmpliacion);
+
+$stringAmbientes = "";
+$arrayAmbiente = array();
+
+while($Ambiente=mysqli_fetch_array($resultAmbienteAmpliacion)) {
+    $arrayAmbiente = explode(", ", "$Ambiente[0]");
+    foreach($arrayAmbiente as $ambiente){
+        if($ambiente === $arrayAmbiente[0]){
+            $stringAmbientes = $stringAmbientes. $ambiente;
+        }
+        else{
+            $stringAmbientes = ", ".$stringAmbientes.$ambiente;
+        }
+
+    }
+}
+
 // Productos similares
-$querySimilares = "SELECT ID, Nombre, Precio FROM sillas WHERE Ambiente='$ambienteFiltrado' AND ID<> $unaSilla[ID] ORDER BY RAND() LIMIT 4";
+$querySimilares = "SELECT S.ID, S.Nombre, S.Precio FROM sillas AS S 
+INNER JOIN sillasAmbientes AS SA ON SA.IDSilla = S.ID 
+WHERE SA.IDAmbiente= $IDAmbienteFiltrado AND SA.IDSilla <> $unaSilla[ID] ORDER BY RAND() LIMIT 4";
 // echo ($querySimilares);
 $resultSimilares = mysqli_query($link, $querySimilares);
 
@@ -65,7 +149,7 @@ $resultSimilares = mysqli_query($link, $querySimilares);
 
     <div class="container mt-3">
         <nav class="breadcrumb">
-            <p><a href="catalogo.php?Ambiente=<?php echo $ambienteBreadcrumbs?>"><?php echo $ambienteBreadcrumbs.$slash?></a> <?php echo $unaSilla['Nombre']?></p>
+            <p><a href="catalogo.php?Ambiente=<?php echo $IDAmbienteFiltrado?>"><?php echo $ambienteBreadcrumbs.$slash?></a> <?php echo $unaSilla['Nombre']?></p>
         </nav>
         <div class="row">
             <div class="col-lg-8 row">
@@ -107,11 +191,11 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                     </div>
                 </div>
                 <h3 class="mt-4">Características</h3>
-                <p>Marca: <?php echo $unaSilla['Marca']?></p>
+                <p>Marca: <?php echo $stringMarcas?></p>
                 <p>Medidas: <?php echo $unaSilla['Medidas']?></p>
                 <p>Material: <?php echo $stringMateriales?></p>
-                <p>Ambiente: <?php echo $unaSilla['Ambiente']?></p>
-                <p>Estilo: <?php echo $unaSilla['Estilo']?></p>
+                <p>Ambiente: <?php echo $stringAmbientes?></p>
+                <p>Estilo: <?php echo $stringEstilos?></p>
                 <h3 class="mt-4">Envío y Costo</h3>
                 <p>Montevideo:<br>
                 Envíos gratis en compras de más de USD 200. Costo regular: USD 10.
@@ -134,7 +218,7 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                             $productoNuevo = 'prod-nuevo';
                         }
                         echo "<div class='col-md-6 col-lg-3 producto'>";
-                            echo "<a class='$productoNuevo' href='ampliacion.php?ID=$sillaSimilar[ID]&Ambiente=$ambienteFiltrado'>";
+                            echo "<a class='$productoNuevo' href='ampliacion.php?ID=$sillaSimilar[ID]&Ambiente=$IDAmbienteFiltrado'>";
                             if($sillaSimilar['Nuevo'] == 1) {
                                 echo "<div class='etiqueta-nuevo'>Nuevo</div>";
                             }

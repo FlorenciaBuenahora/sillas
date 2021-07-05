@@ -2,19 +2,25 @@
 include("../conexion.php");
 
 // Consulta Marca
-$queryMarca = "SELECT DISTINCT Marca FROM sillas";
+$queryMarca = "SELECT ID, NombreMarca FROM marcas";
 $resultMarca = mysqli_query($link, $queryMarca);
 
 // Consulta Ambiente
-$queryAmbiente = "SELECT * FROM ambientes";
+$queryAmbiente = "SELECT ID, NombreAmbiente FROM ambientes";
 $resultAmbiente = mysqli_query($link, $queryAmbiente);
 
 // Consulta Color
 
+$queryColor = "SELECT ID, Nombre, Codigo FROM colores";
+$resultColor = mysqli_query($link, $queryColor);
+
 // Consulta Material
 
+$queryMaterial = "SELECT ID, Nombre FROM materiales";
+$resultMaterial = mysqli_query($link, $queryMaterial);
+
 // Consulta Estilo
-$queryEstilo = "SELECT * FROM estilos";
+$queryEstilo = "SELECT ID, NombreEstilo FROM estilos";
 $resultEstilo = mysqli_query($link, $queryEstilo);
 
 // Consulta Destacado
@@ -69,7 +75,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                 <?php 
                     while($unAmbiente = mysqli_fetch_array($resultAmbiente)) {
                         echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Ambiente[]' type='checkbox' id='$unAmbiente[1]' value='$unAmbiente[1]'>";
+                            echo "<input class='form-check-input' name='Ambiente[]' type='checkbox' id='$unAmbiente[1]' value='$unAmbiente[0]'>";
                             echo "<label class='form-check-label' for='$unAmbiente[1]'>$unAmbiente[1]</label>";
                         echo "</div>";
                     }
@@ -86,7 +92,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                     <option selected>Selecciona una marca</option>
                     <?php 
                         while($unaMarca = mysqli_fetch_array($resultMarca)) {
-                            echo "<option value='$unaMarca[Marca]'>$unaMarca[Marca]</option>";
+                            echo "<option value='$unaMarca[0]'>$unaMarca[1]</option>";
                         }
                     ?>
                 </select>
@@ -107,34 +113,31 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <!-- Color -->
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Color</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                    <label class="form-check-label" for="inlineRadio1">Azul</label>
+                <?php 
+                    while($unColor = mysqli_fetch_array($resultColor)) {
+                        echo "<div class='form-check form-check-inline'>";
+                            echo "<input class='form-check-input' name='Color[]' type='radio' id='$unColor[1]' value='$unColor[0]'>";
+                            echo "<label class='form-check-label' for='$unColor[1]'>$unColor[1]</label>";
+                        echo "</div>";
+                    }
+                ?> 
+
+                <div class="invalid-feedback">
+                        Por favor selecciona un color
                 </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                    <label class="form-check-label" for="inlineRadio2">Beige</label>
-                </div>
-            </div>
-            <div class="invalid-feedback">
-                    Por favor selecciona un color
             </div>
 
             <!-- Material -->
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Material</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="material1" value="option1">
-                    <label class="form-check-label" for="material1">Acero</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="material2" value="option2">
-                    <label class="form-check-label" for="material2">Acero Inoxidable</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="material3" value="option3">
-                    <label class="form-check-label" for="material3">Aluminio</label>
-                </div>
+                <?php 
+                    while($unMaterial = mysqli_fetch_array($resultMaterial)) {
+                        echo "<div class='form-check form-check-inline'>";
+                            echo "<input class='form-check-input' name='Material[]' type='checkbox' id='$unMaterial[1]' value='$unMaterial[0]'>";
+                            echo "<label class='form-check-label' for='$unMaterial[1]'>$unMaterial[1]</label>";
+                        echo "</div>";
+                    }
+                ?> 
                 <div class="invalid-feedback">
                     Por favor seleccione al menos un material
                 </div>
@@ -186,11 +189,11 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Destacado</label><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="destacadoSi" value="option1">
+                    <input class="form-check-input" type="radio" name="destacado" id="destacadoSi" value="1">
                     <label class="form-check-label" for="destacadoSi">Si</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="destacadoNo" value="option2">
+                    <input class="form-check-input" type="radio" name="destacado" id="destacadoNo" value="0">
                     <label class="form-check-label" for="destacadoNo">No</label>
                 </div>
             </div>
@@ -202,11 +205,11 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Nuevo</label><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="nuevoSi" value="option1">
+                    <input class="form-check-input" type="radio" name="nuevo" id="nuevoSi" value="1">
                     <label class="form-check-label" for="nuevoSi">Si</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="nuevoNo" value="option2">
+                    <input class="form-check-input" type="radio" name="nuevo" id="nuevoNo" value="0">
                     <label class="form-check-label" for="nuevoNo">No</label>
                 </div>
             </div>

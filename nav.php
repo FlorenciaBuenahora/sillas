@@ -1,11 +1,11 @@
 <?php
 
 // Ambientes
-$queryAmbiente="SELECT DISTINCT Ambiente FROM sillas WHERE Ambiente NOT LIKE '%Comedor,Escritorio%' AND Ambiente NOT LIKE '%Comedor,Exterior%'";
+$queryAmbiente="SELECT DISTINCT ID, NombreAmbiente FROM ambientes";
 $resultAmbiente=mysqli_query($link, $queryAmbiente);
 
 // Buscador
-$queryBuscador = "SELECT DISTINCT ID, Nombre, Precio, Ambiente FROM sillas";
+$queryBuscador = "SELECT DISTINCT ID, Nombre, Precio FROM sillas";
 $resultBuscador = mysqli_query($link, $queryBuscador);
 
 ?>
@@ -22,7 +22,7 @@ $resultBuscador = mysqli_query($link, $queryBuscador);
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <?php
                 while($Ambiente=mysqli_fetch_array($resultAmbiente)){
-                    echo "<li class='nav-item me-5'><a href='catalogo.php?Ambiente=$Ambiente[0]'>$Ambiente[0]</a></li>";
+                    echo "<li class='nav-item me-5'><a href='catalogo.php?Ambiente=$Ambiente[0]'>$Ambiente[1]</a></li>";
                 }
             ?>
             </ul>
