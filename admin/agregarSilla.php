@@ -39,7 +39,8 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-        selector: '#mytextarea'
+        selector: '#mytextarea',
+        language: 'es'
         });
     </script>
 
@@ -49,12 +50,12 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
 <body>
     <div class="container">
         <h1>Nueva silla</h1>
-        <form action="insertar.php" class="row g-3 needs-validation" novalidate>
+        <form action="insertar.php" method="GET" class="row g-3 needs-validation" novalidate>
 
             <!-- Codigo -->
             <div class="col-md-6">
                 <label for="codigo" class="form-label">Código</label>
-                <input type="text" id="codigo" name="codigo" class="form-control" required>
+                <input type="text" id="codigo" name="Codigo" class="form-control" required>
                 <div class="invalid-feedback">
                     Por favor ingresa el codigo
                 </div>
@@ -63,7 +64,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <!-- Nombre -->
             <div class="col-md-6 mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                <input type="text" id="nombre" name="Nombre" class="form-control" required>
                 <div class="invalid-feedback">
                     Por favor ingresa el nombre
                 </div>
@@ -88,7 +89,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <!-- Marca -->
             <div class="col-md-6">
                 <label for="" class="mb-2">Marca</label>
-                <select class="form-select" required>
+                <select class="form-select" name="Marca" required>
                     <option selected>Selecciona una marca</option>
                     <?php 
                         while($unaMarca = mysqli_fetch_array($resultMarca)) {
@@ -104,7 +105,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <!-- Precio -->
             <div class="col-md-6 mb-3">
                 <label for="precio" class="form-label">Precio</label>
-                <input type="number" name="precio" id="precio" class="form-control" required>
+                <input type="number" name="Precio" id="precio" class="form-control" required>
                 <div class="invalid-feedback">
                     Por favor ingresa el precio
                 </div>
@@ -117,7 +118,9 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                     while($unColor = mysqli_fetch_array($resultColor)) {
                         echo "<div class='form-check form-check-inline'>";
                             echo "<input class='form-check-input' name='Color[]' type='radio' id='$unColor[1]' value='$unColor[0]'>";
-                            echo "<label class='form-check-label' for='$unColor[1]'>$unColor[1]</label>";
+                            echo "<label class='form-check-label' for='$unColor[1]'>$unColor[1]
+                            <div style='width:58px; height:24px; background-color:$unColor[2];'></div>
+                            </label>";
                         echo "</div>";
                     }
                 ?> 
@@ -146,7 +149,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <!-- Medidas -->
             <div class="col-md-6">
                 <label for="medidas" class="form-label">Medidas</label>
-                <input type="text" id="medidas" name="medidas" class="form-control" required>
+                <input type="text" id="medidas" name="Medidas" class="form-control" required>
                 <div class="invalid-feedback">
                     Por favor ingresa las medidas
                 </div>
@@ -162,16 +165,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                             echo "<label class='form-check-label' for='$unEstilo[1]'>$unEstilo[1]</label>";
                         echo "</div>";
                     }
-                ?>       
-
-                <!-- <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="estilo1" value="option1">
-                    <label class="form-check-label" for="estilo1">Colonial</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="Moderno" value="option2">
-                    <label class="form-check-label" for="estilo2">Acero Inoxidable</label>
-                </div> -->
+                ?>
                 <div class="invalid-feedback">
                     Por favor selecciona al menos un estilo
                 </div>
@@ -180,7 +174,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <!-- Descripción -->
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Descripción</label><br>
-                <textarea id="mytextarea" required></textarea>
+                <textarea id="mytextarea" name="Descripcion" required></textarea>
                 <div class="invalid-feedback">
                     Por favor escribe una descripción
             </div>
@@ -189,11 +183,11 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Destacado</label><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="destacado" id="destacadoSi" value="1">
+                    <input class="form-check-input" type="radio" name="Destacado" id="destacadoSi" value="1">
                     <label class="form-check-label" for="destacadoSi">Si</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="destacado" id="destacadoNo" value="0">
+                    <input class="form-check-input" type="radio" name="Destacado" id="destacadoNo" value="0">
                     <label class="form-check-label" for="destacadoNo">No</label>
                 </div>
             </div>
@@ -205,11 +199,11 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
             <div class="col-12 mb-3">
                 <label for="" class="mb-2">Nuevo</label><br>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="nuevo" id="nuevoSi" value="1">
+                    <input class="form-check-input" type="radio" name="Nuevo" id="nuevoSi" value="1">
                     <label class="form-check-label" for="nuevoSi">Si</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="nuevo" id="nuevoNo" value="0">
+                    <input class="form-check-input" type="radio" name="Nuevo" id="nuevoNo" value="0">
                     <label class="form-check-label" for="nuevoNo">No</label>
                 </div>
             </div>
