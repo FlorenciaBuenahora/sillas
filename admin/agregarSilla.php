@@ -23,10 +23,6 @@ $resultMaterial = mysqli_query($link, $queryMaterial);
 $queryEstilo = "SELECT ID, NombreEstilo FROM estilos";
 $resultEstilo = mysqli_query($link, $queryEstilo);
 
-// Consulta Destacado
-
-// Consulta Nuevo
-
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +50,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
 
             <!-- Codigo -->
             <div class="col-md-6">
-                <label for="codigo" class="form-label">Código</label>
+                <label for="codigo" class="form-label">Código (máximo 5 caracteres)</label>
                 <input type="text" id="codigo" name="Codigo" class="form-control" required>
                 <div class="invalid-feedback">
                     Por favor ingresa el codigo
@@ -117,7 +113,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                 <?php 
                     while($unColor = mysqli_fetch_array($resultColor)) {
                         echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Color[]' type='radio' id='$unColor[1]' value='$unColor[0]'>";
+                            echo "<input class='form-check-input' name='Color' type='radio' id='$unColor[1]' value='$unColor[0]'>";
                             echo "<label class='form-check-label' for='$unColor[1]'>$unColor[1]
                             <div style='width:58px; height:24px; background-color:$unColor[2];'></div>
                             </label>";
@@ -161,7 +157,7 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                 <?php 
                     while($unEstilo = mysqli_fetch_array($resultEstilo)) {
                         echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Estilo[]' type='checkbox' id='$unEstilo[1]' value='$unEstilo[1]'>";
+                            echo "<input class='form-check-input' name='Estilo[]' type='checkbox' id='$unEstilo[1]' value='$unEstilo[0]'>";
                             echo "<label class='form-check-label' for='$unEstilo[1]'>$unEstilo[1]</label>";
                         echo "</div>";
                     }

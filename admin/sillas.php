@@ -12,6 +12,11 @@ if(isset($_GET['mensaje'])) {
             $clase = "correcto";
             break;
         }
+        case "insertadoOk"; {
+            $textoMensaje = "Se ha agregado una silla";
+            $clase = "correcto";
+            break;
+        }
         case "eliminadoMal"; {
             $textoMensaje = "No se ha eliminado una silla";
             $clase = "error";
