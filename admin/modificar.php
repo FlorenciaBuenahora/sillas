@@ -22,10 +22,13 @@ $nuevo = $_GET['Nuevo'];
 
 // $resultInsertarSillas = mysqli_query($link, $queryInsertar);
 
-$queryModificarSilla = "UPDATE sillas SET Codigo = '$codigo', Nombre = '$nombre', Marca = $marca";
+$queryUpdateSilla = "UPDATE sillas SET Codigo = '$codigo', Nombre = '$nombre', Marca = $marca, Precio = $precio, Color = $color, 
+Medidas = '$medidas', Descripcion = '$descripcion', Destacado = $destacado, Nuevo = $nuevo WHERE ID=$ID";
+// echo $queryUpdateSilla;
+$resultUpdateSilla = mysqli_query($link, $queryUpdateSilla);
 
 // Obtener ID del ultimo elemento insertado
-$sillaID = $link -> insert_id;
+// $sillaID = $link -> insert_id;
 
 // $queryInsertarSillasAmbientes = "INSERT INTO sillasAmbientes(IDSilla,IDAmbiente) VALUES";
 
@@ -41,7 +44,7 @@ $sillaID = $link -> insert_id;
 //     }
 // }
 
-$resultInsertarSillasAmbientes = mysqli_query($link, $queryInsertarSillasAmbientes);
+// $resultInsertarSillasAmbientes = mysqli_query($link, $queryInsertarSillasAmbientes);
 
 // $queryInsertarSillasMateriales = "INSERT INTO sillasMateriales(IDSilla,IDMaterial) VALUES";
 
@@ -54,7 +57,7 @@ $resultInsertarSillasAmbientes = mysqli_query($link, $queryInsertarSillasAmbient
 //     }
 // }
 
-$resultInsertarSillasMateriales = mysqli_query($link, $queryInsertarSillasMateriales);
+// $resultInsertarSillasMateriales = mysqli_query($link, $queryInsertarSillasMateriales);
 
 
 // $queryInsertarSillasEstilos = "INSERT INTO sillasEstilos(IDSilla,IDEstilo) VALUES";
@@ -68,9 +71,9 @@ $resultInsertarSillasMateriales = mysqli_query($link, $queryInsertarSillasMateri
 //     }
 // }
 
-$resultInsertarSillasEstilos = mysqli_query($link, $queryInsertarSillasEstilos);
+// $resultInsertarSillasEstilos = mysqli_query($link, $queryInsertarSillasEstilos);
 
-if ($resultInsertarSillas && $resultInsertarSillasAmbientes && $resultInsertarSillasMateriales && $resultInsertarSillasEstilos) {
-    header ("location:sillas.php?mensaje=insertadoOk");
-}
+// if ($resultUpdateSilla && $resultInsertarSillasAmbientes && $resultInsertarSillasMateriales && $resultInsertarSillasEstilos) {
+//     header ("location:sillas.php?mensaje=modificadoOk");
+// }
 ?>
