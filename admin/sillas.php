@@ -80,6 +80,7 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
                 <th scope="col">Marca</th>
                 <!-- <th scope="col">Ambiente</th> -->
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -96,6 +97,7 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
                         echo "<td>USD $unaSilla[Precio]</td>";
                         echo "<td>$unaSilla[Marca]</td>";
                         echo "<td>$unaSilla[Ambiente]</td>";
+                        echo "<td><a href='modificar.php?ID=$unaSilla[ID]'>Modificar</a></td>"; 
                         echo "<td><a href='eliminar.php?ID=$unaSilla[ID]'>Eliminar</a></td>";        
                     echo "</tr>";
                 }
