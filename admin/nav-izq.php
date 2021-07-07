@@ -1,4 +1,4 @@
-<div class="col-md-2">
+<div class="col-md-2 celeste">
     <div class="nav-izq pt-3">
         <ul>
             <li class="nav-item d-flex">

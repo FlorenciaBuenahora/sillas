@@ -45,174 +45,179 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
     <title>Agregar silla</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Nueva silla</h1>
-        <form action="insertar.php" method="GET" class="row g-3 needs-validation" novalidate>
+    <?php include("header.php");?>
+    <div class="row g-0">
+        <?php include("nav-izq.php");?>
+        <div class="col-md-10 bg-light px-4">
+        <h1 class="h1-admin my-4">Nueva Silla</h1>
+            <form action="insertar.php" method="GET" class="row g-3 needs-validation" novalidate>
 
-            <!-- Codigo -->
-            <div class="col-md-6">
-                <label for="codigo" class="form-label">Código (máximo 5 caracteres)</label>
-                <input type="text" id="codigo" name="Codigo" class="form-control" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa el codigo
+                <!-- Codigo -->
+                <div class="col-md-6">
+                    <label for="codigo" class="form-label">Código (máximo 5 caracteres)</label>
+                    <input type="text" id="codigo" name="Codigo" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Por favor ingresa el codigo
+                    </div>
                 </div>
-            </div>
 
-            <!-- Nombre -->
-            <div class="col-md-6 mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" id="nombre" name="Nombre" class="form-control" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa el nombre
+                <!-- Nombre -->
+                <div class="col-md-6 mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" name="Nombre" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Por favor ingresa el nombre
+                    </div>
                 </div>
-            </div>
 
-            <!-- Ambiente -->
-            <div class="col-12 mb-3">
-                <label for="" class="mb-2">Ambiente</label><br>
-                <?php 
-                    while($unAmbiente = mysqli_fetch_array($resultAmbiente)) {
-                        echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Ambiente[]' type='checkbox' id='$unAmbiente[1]' value='$unAmbiente[0]'>";
-                            echo "<label class='form-check-label' for='$unAmbiente[1]'>$unAmbiente[1]</label>";
-                        echo "</div>";
-                    }
-                ?>
-                <div class="invalid-feedback">
-                    Por favor seleccione al menos un ambiente
-                </div>
-            </div>
-
-            <!-- Marca -->
-            <div class="col-md-6">
-                <label for="" class="mb-2">Marca</label>
-                <select class="form-select" name="Marca" required>
-                    <option selected>Selecciona una marca</option>
+                <!-- Ambiente -->
+                <div class="col-12 mb-3">
+                    <label for="" class="mb-2">Ambiente</label><br>
                     <?php 
-                        while($unaMarca = mysqli_fetch_array($resultMarca)) {
-                            echo "<option value='$unaMarca[0]'>$unaMarca[1]</option>";
+                        while($unAmbiente = mysqli_fetch_array($resultAmbiente)) {
+                            echo "<div class='form-check form-check-inline'>";
+                                echo "<input class='form-check-input' name='Ambiente[]' type='checkbox' id='$unAmbiente[1]' value='$unAmbiente[0]'>";
+                                echo "<label class='form-check-label' for='$unAmbiente[1]'>$unAmbiente[1]</label>";
+                            echo "</div>";
                         }
                     ?>
-                </select>
+                    <div class="invalid-feedback">
+                        Por favor seleccione al menos un ambiente
+                    </div>
+                </div>
+
+                <!-- Marca -->
+                <div class="col-md-6">
+                    <label for="" class="mb-2">Marca</label>
+                    <select class="form-select" name="Marca" required>
+                        <option selected>Selecciona una marca</option>
+                        <?php 
+                            while($unaMarca = mysqli_fetch_array($resultMarca)) {
+                                echo "<option value='$unaMarca[0]'>$unaMarca[1]</option>";
+                            }
+                        ?>
+                    </select>
+                    <div class="invalid-feedback">
+                        Por favor ingresa el codigo
+                    </div>
+                </div>
+
+                <!-- Precio -->
+                <div class="col-md-6 mb-3">
+                    <label for="precio" class="form-label">Precio</label>
+                    <input type="number" name="Precio" id="precio" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Por favor ingresa el precio
+                    </div>
+                </div>
+
+                <!-- Color -->
+                <div class="col-12 mb-3">
+                    <label for="" class="mb-2">Color</label><br>
+                    <?php 
+                        while($unColor = mysqli_fetch_array($resultColor)) {
+                            echo "<div class='form-check form-check-inline mb-3'>";
+                                echo "<input class='form-check-input' name='Color' type='radio' id='$unColor[1]' value='$unColor[0]'>";
+                                echo "<label class='form-check-label d-flex align-items-center' for='$unColor[1]'>$unColor[1]
+                                <div style='width:58px; height:24px; background-color:$unColor[2]; border-radius:.25em; margin-left:5px;'></div>
+                                </label>";
+                            echo "</div>";
+                        }
+                    ?> 
+
+                    <div class="invalid-feedback">
+                            Por favor selecciona un color
+                    </div>
+                </div>
+
+                <!-- Material -->
+                <div class="col-12 mb-3">
+                    <label for="" class="mb-2">Material</label><br>
+                    <?php 
+                        while($unMaterial = mysqli_fetch_array($resultMaterial)) {
+                            echo "<div class='form-check form-check-inline mb-3'>";
+                                echo "<input class='form-check-input' name='Material[]' type='checkbox' id='$unMaterial[1]' value='$unMaterial[0]'>";
+                                echo "<label class='form-check-label' for='$unMaterial[1]'>$unMaterial[1]</label>";
+                            echo "</div>";
+                        }
+                    ?> 
+                    <div class="invalid-feedback">
+                        Por favor seleccione al menos un material
+                    </div>
+                </div>
+
+                <!-- Medidas -->
+                <div class="col-md-6">
+                    <label for="medidas" class="form-label">Medidas</label>
+                    <input type="text" id="medidas" name="Medidas" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Por favor ingresa las medidas
+                    </div>
+                </div>
+
+                <!-- Estilo -->
+                <div class="col-md-6 mb-3">
+                    <label for="" class="mb-2">Estilo</label><br>
+                    <?php 
+                        while($unEstilo = mysqli_fetch_array($resultEstilo)) {
+                            echo "<div class='form-check form-check-inline'>";
+                                echo "<input class='form-check-input' name='Estilo[]' type='checkbox' id='$unEstilo[1]' value='$unEstilo[0]'>";
+                                echo "<label class='form-check-label' for='$unEstilo[1]'>$unEstilo[1]</label>";
+                            echo "</div>";
+                        }
+                    ?>
+                    <div class="invalid-feedback">
+                        Por favor selecciona al menos un estilo
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="col-12 mb-3">
+                    <label for="" class="mb-2">Descripción</label><br>
+                    <textarea id="mytextarea" name="Descripcion" required></textarea>
+                    <div class="invalid-feedback">
+                        Por favor escribe una descripción
+                </div>
+                </div>
+                <!-- Destacado -->
+                <div class="col-12 mb-3">
+                    <label for="" class="mb-2">Destacado</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Destacado" id="destacadoSi" value="1">
+                        <label class="form-check-label" for="destacadoSi">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Destacado" id="destacadoNo" value="0">
+                        <label class="form-check-label" for="destacadoNo">No</label>
+                    </div>
+                </div>
                 <div class="invalid-feedback">
-                    Por favor ingresa el codigo
+                        Por favor selecciona si es destacado o no
                 </div>
-            </div>
 
-            <!-- Precio -->
-            <div class="col-md-6 mb-3">
-                <label for="precio" class="form-label">Precio</label>
-                <input type="number" name="Precio" id="precio" class="form-control" required>
+                <!-- Nuevo -->
+                <div class="col-12 mb-3">
+                    <label for="" class="mb-2">Nuevo</label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Nuevo" id="nuevoSi" value="1">
+                        <label class="form-check-label" for="nuevoSi">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Nuevo" id="nuevoNo" value="0">
+                        <label class="form-check-label" for="nuevoNo">No</label>
+                    </div>
+                </div>
                 <div class="invalid-feedback">
-                    Por favor ingresa el precio
+                        Por favor selecciona si es nuevo o no
                 </div>
-            </div>
 
-            <!-- Color -->
-            <div class="col-12 mb-3">
-                <label for="" class="mb-2">Color</label><br>
-                <?php 
-                    while($unColor = mysqli_fetch_array($resultColor)) {
-                        echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Color' type='radio' id='$unColor[1]' value='$unColor[0]'>";
-                            echo "<label class='form-check-label' for='$unColor[1]'>$unColor[1]
-                            <div style='width:58px; height:24px; background-color:$unColor[2];'></div>
-                            </label>";
-                        echo "</div>";
-                    }
-                ?> 
-
-                <div class="invalid-feedback">
-                        Por favor selecciona un color
+                <div class="col my-3 d-flex justify-content-end">
+                    <input type="submit" value="Agregar silla" role="button" class="btn btn-primary px-6">
                 </div>
-            </div>
-
-            <!-- Material -->
-            <div class="col-12 mb-3">
-                <label for="" class="mb-2">Material</label><br>
-                <?php 
-                    while($unMaterial = mysqli_fetch_array($resultMaterial)) {
-                        echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Material[]' type='checkbox' id='$unMaterial[1]' value='$unMaterial[0]'>";
-                            echo "<label class='form-check-label' for='$unMaterial[1]'>$unMaterial[1]</label>";
-                        echo "</div>";
-                    }
-                ?> 
-                <div class="invalid-feedback">
-                    Por favor seleccione al menos un material
-                </div>
-            </div>
-
-            <!-- Medidas -->
-            <div class="col-md-6">
-                <label for="medidas" class="form-label">Medidas</label>
-                <input type="text" id="medidas" name="Medidas" class="form-control" required>
-                <div class="invalid-feedback">
-                    Por favor ingresa las medidas
-                </div>
-            </div>
-
-            <!-- Estilo -->
-            <div class="col-md-6 mb-3">
-                <label for="" class="mb-2">Estilo</label><br>
-                <?php 
-                    while($unEstilo = mysqli_fetch_array($resultEstilo)) {
-                        echo "<div class='form-check form-check-inline'>";
-                            echo "<input class='form-check-input' name='Estilo[]' type='checkbox' id='$unEstilo[1]' value='$unEstilo[0]'>";
-                            echo "<label class='form-check-label' for='$unEstilo[1]'>$unEstilo[1]</label>";
-                        echo "</div>";
-                    }
-                ?>
-                <div class="invalid-feedback">
-                    Por favor selecciona al menos un estilo
-                </div>
-            </div>
-
-            <!-- Descripción -->
-            <div class="col-12 mb-3">
-                <label for="" class="mb-2">Descripción</label><br>
-                <textarea id="mytextarea" name="Descripcion" required></textarea>
-                <div class="invalid-feedback">
-                    Por favor escribe una descripción
-            </div>
-            </div>
-            <!-- Destacado -->
-            <div class="col-12 mb-3">
-                <label for="" class="mb-2">Destacado</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Destacado" id="destacadoSi" value="1">
-                    <label class="form-check-label" for="destacadoSi">Si</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Destacado" id="destacadoNo" value="0">
-                    <label class="form-check-label" for="destacadoNo">No</label>
-                </div>
-            </div>
-            <div class="invalid-feedback">
-                    Por favor selecciona si es destacado o no
-            </div>
-
-            <!-- Nuevo -->
-            <div class="col-12 mb-3">
-                <label for="" class="mb-2">Nuevo</label><br>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Nuevo" id="nuevoSi" value="1">
-                    <label class="form-check-label" for="nuevoSi">Si</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Nuevo" id="nuevoNo" value="0">
-                    <label class="form-check-label" for="nuevoNo">No</label>
-                </div>
-            </div>
-            <div class="invalid-feedback">
-                    Por favor selecciona si es nuevo o no
-            </div>
-
-            <div class="col mt-3 d-flex justify-content-end">
-                <input type="submit" value="Agregar silla" role="button" class="btn btn-primary px-6">
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
+
 
     <!-- Script validar -->
     <script>
