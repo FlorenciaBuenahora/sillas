@@ -1,4 +1,5 @@
 <?php
+include("control.php");
 include("../conexion.php");
 
 $idImagen = $_GET['IDImagen'];

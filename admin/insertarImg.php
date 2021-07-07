@@ -1,4 +1,5 @@
 <?php
+include("control.php");
 include("../conexion.php");
 
 // Toma la imagen y lo mueve a la carpeta

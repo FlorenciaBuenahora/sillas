@@ -1,0 +1,1 @@
+<a href="cerrarSesion.php">Salir</a>
