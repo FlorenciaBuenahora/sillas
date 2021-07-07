@@ -17,63 +17,63 @@ $descripcion = filter_input(INPUT_GET, 'Descripcion', FILTER_SANITIZE_STRING);
 $destacado = $_GET['Destacado'];
 $nuevo = $_GET['Nuevo'];
 
-// $queryInsertar = "INSERT INTO sillas (Codigo, Nombre, Marca, Precio, Color, Medidas, Descripcion, Destacado, Nuevo)
-//                     VALUES ('$codigo', '$nombre', $marca, $precio, $color, '$medidas', '$descripcion', $destacado, $nuevo)";
-
-// $resultInsertarSillas = mysqli_query($link, $queryInsertar);
-
 $queryUpdateSilla = "UPDATE sillas SET Codigo = '$codigo', Nombre = '$nombre', Marca = $marca, Precio = $precio, Color = $color, 
 Medidas = '$medidas', Descripcion = '$descripcion', Destacado = $destacado, Nuevo = $nuevo WHERE ID=$ID";
 // echo $queryUpdateSilla;
 $resultUpdateSilla = mysqli_query($link, $queryUpdateSilla);
 
-// Obtener ID del ultimo elemento insertado
-// $sillaID = $link -> insert_id;
+$queryDeleteSillasAmbientes = "DELETE FROM sillasAmbientes WHERE IDSilla = $ID";
+$resultDeleteSillasAmbientes = mysqli_query($link, $queryDeleteSillasAmbientes);
 
-// $queryInsertarSillasAmbientes = "INSERT INTO sillasAmbientes(IDSilla,IDAmbiente) VALUES";
+$queryInsertarSillasAmbientes = "INSERT INTO sillasAmbientes(IDSilla,IDAmbiente) VALUES";
 
-// // Recorrido para ver cuantos ambientes tiene la silla ingresada
-// foreach($ambientes as $ambiente){
+// Recorrido para ver cuantos ambientes tiene la silla ingresada
+foreach($ambientes as $ambiente){
 
-//     // Sino es el ultimo ambiente se le agrega una coma
-//     if($ambiente !== end($ambientes)){
-//         $queryInsertarSillasAmbientes = $queryInsertarSillasAmbientes."($sillaID,$ambiente),";
-//     }
-//     else{
-//         $queryInsertarSillasAmbientes = $queryInsertarSillasAmbientes."($sillaID,$ambiente)";
-//     }
-// }
+    // Sino es el ultimo ambiente se le agrega una coma
+    if($ambiente !== end($ambientes)){
+        $queryInsertarSillasAmbientes = $queryInsertarSillasAmbientes."($ID,$ambiente),";
+    }
+    else{
+        $queryInsertarSillasAmbientes = $queryInsertarSillasAmbientes."($ID,$ambiente)";
+    }
+}
 
-// $resultInsertarSillasAmbientes = mysqli_query($link, $queryInsertarSillasAmbientes);
+$resultInsertarSillasAmbientes = mysqli_query($link, $queryInsertarSillasAmbientes);
 
-// $queryInsertarSillasMateriales = "INSERT INTO sillasMateriales(IDSilla,IDMaterial) VALUES";
+$queryDeleteSillasMateriales = "DELETE FROM sillasMateriales WHERE IDSilla = $ID";
+$resultDeleteSillasMateriales = mysqli_query($link, $queryDeleteSillasMateriales);
 
-// foreach($materiales as $material){
-//     if($material !== end($materiales)){
-//         $queryInsertarSillasMateriales = $queryInsertarSillasMateriales."($sillaID,$material),";
-//     }
-//     else{
-//         $queryInsertarSillasMateriales = $queryInsertarSillasMateriales."($sillaID,$material)";
-//     }
-// }
+$queryInsertarSillasMateriales = "INSERT INTO sillasMateriales(IDSilla,IDMaterial) VALUES";
 
-// $resultInsertarSillasMateriales = mysqli_query($link, $queryInsertarSillasMateriales);
+foreach($materiales as $material){
+    if($material !== end($materiales)){
+        $queryInsertarSillasMateriales = $queryInsertarSillasMateriales."($ID,$material),";
+    }
+    else{
+        $queryInsertarSillasMateriales = $queryInsertarSillasMateriales."($ID,$material)";
+    }
+}
 
+$resultInsertarSillasMateriales = mysqli_query($link, $queryInsertarSillasMateriales);
 
-// $queryInsertarSillasEstilos = "INSERT INTO sillasEstilos(IDSilla,IDEstilo) VALUES";
+$queryDeleteSillasEstilos = "DELETE FROM sillasEstilos WHERE IDSilla = $ID";
+$resultDeleteSillasEstilos = mysqli_query($link, $queryDeleteSillasEstilos);
 
-// foreach($estilos as $estilo){
-//     if($estilo !== end($estilos)){
-//         $queryInsertarSillasEstilos = $queryInsertarSillasEstilos."($sillaID,$estilo),";
-//     }
-//     else{
-//         $queryInsertarSillasEstilos = $queryInsertarSillasEstilos."($sillaID,$estilo)";
-//     }
-// }
+$queryInsertarSillasEstilos = "INSERT INTO sillasEstilos(IDSilla,IDEstilo) VALUES";
 
-// $resultInsertarSillasEstilos = mysqli_query($link, $queryInsertarSillasEstilos);
+foreach($estilos as $estilo){
+    if($estilo !== end($estilos)){
+        $queryInsertarSillasEstilos = $queryInsertarSillasEstilos."($ID,$estilo),";
+    }
+    else{
+        $queryInsertarSillasEstilos = $queryInsertarSillasEstilos."($ID,$estilo)";
+    }
+}
 
-// if ($resultUpdateSilla && $resultInsertarSillasAmbientes && $resultInsertarSillasMateriales && $resultInsertarSillasEstilos) {
-//     header ("location:sillas.php?mensaje=modificadoOk");
-// }
+$resultInsertarSillasEstilos = mysqli_query($link, $queryInsertarSillasEstilos);
+
+if ($resultUpdateSilla && $resultInsertarSillasAmbientes && $resultInsertarSillasMateriales && $resultInsertarSillasEstilos) {
+    header ("location:sillas.php?mensaje=modificadoOk");
+}
 ?>
