@@ -19,7 +19,7 @@ if($cantidad === 1) {
     $_SESSION['logueado']="ok";
     $_SESSION['horaLogueo']=date("Y-n-j H:i:s");
 
-    header("location:dashboard.php?mensaje=bienvenida");
+    header("location:dashboard.php");
 } else {
     header("location:index.php?mensaje=noValido");
 }

@@ -1,3 +1,13 @@
+// General
+.h1-admin {
+    font-size: 28px;
+}
+.h2-admin {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+// Login
 .login-img {
     background-image: url(../admin/assets/img/img-login.jpg);
     height: 100vh;
@@ -20,5 +30,71 @@
     }
     .btn-primary {
         margin-left: 0;
+    }
+}
+
+// Header
+#nav-admin {
+    ul li {
+        padding-right: 15px;
+    }
+    ul li:last-child {
+        padding-right: 0;
+    }
+}
+
+// Iconos
+.icono {
+    width: 20px;
+}
+
+// Nav izq
+.nav-izq {
+    background-color: $light-celeste;
+    height: 100vh;
+    ul {
+        padding-left: 0.75rem;
+
+        a {
+            padding: 20px 0px 0px 0px;
+            color: $black;
+
+            &:hover {
+                color: $white;
+            }
+
+            svg {
+                margin-right: 20px;
+            }
+        }
+    }
+}
+
+// Dashboard
+.dashboard-datos {
+    h2 {
+        margin-top: 24px;
+    }
+    h2:first-child {
+        margin-top: 0;
+    }
+}
+.box {
+    padding: 17px 15px;
+    background-color: $white;
+    border-radius: 6px;
+    box-shadow: $box-shadow-sm;
+}
+
+// Listado
+
+.listado {
+    a {
+        color: $black;
+        text-decoration: none;
+
+        &:hover {
+            color: $darken-celeste;
+        }
     }
 }
