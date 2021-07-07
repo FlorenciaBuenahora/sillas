@@ -23,7 +23,7 @@ if(isset($_GET['mensaje'])) {
             break;
         }
         case "imgOk"; {
-            $textoMensaje = "Imágenes subidas correctamente";
+            $textoMensaje = "Imagen subida correctamente";
             $clase = "correcto";
             break;
         }

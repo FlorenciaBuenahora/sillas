@@ -1,6 +1,21 @@
 <?php
 include("../conexion.php");
 
+// Mensajes
+$textoMensaje = "";
+$clase = "";
+if(isset($_GET['mensaje'])) {
+    $mensaje = $_GET['mensaje'];
+    switch ($mensaje) {
+        case "imgBorrada"; {
+            $textoMensaje = "Se ha eliminado una imagen";
+            $clase = "correcto";
+            break;
+        }
+    }
+}
+
+
 // Modificar datos de tabla silla
 $idModificar = $_GET['ID'];
 $queryModificarSilla = "SELECT * FROM sillas WHERE ID=$idModificar";
@@ -41,6 +56,10 @@ $resultMaterial = mysqli_query($link, $queryMaterial);
 $queryEstilo = "SELECT ID, NombreEstilo FROM estilos";
 $resultEstilo = mysqli_query($link, $queryEstilo);
 
+// Consulta Imagenes
+$queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $idModificar";
+$resultImagenes = mysqli_query($link, $queryImagenes);
+
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +82,8 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
 </head>
 <body>
     <div class="container">
+    <!-- Mensajes -->
+    <p class="mensaje<?php echo $clase?>"><?php echo $textoMensaje?></p>
         <h1>Modificar silla</h1>
         <form action="modificar.php" method="GET" class="row g-3 needs-validation" novalidate>
             <input type="hidden" value="<?php echo $sillaModificar['ID'] ?>" name="ID">
@@ -293,6 +314,23 @@ $resultEstilo = mysqli_query($link, $queryEstilo);
                 <input type="submit" value="Modificar silla" role="button" class="btn btn-primary px-6">
             </div>
         </form>
+
+        <!-- Imagenes -->
+        <figure id=imagenes>
+        <?php 
+        $cantidadImagenes = mysqli_num_rows($resultImagenes);
+
+        if($cantidadImagenes > 0) {
+            echo "<h2>Imágenes subidas</h2>";
+            while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                echo "<img class='img-fluid' src='../assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                echo "<a href='borrarImg.php?IDImagen=$unaImagen[ID]&IDModificar=$idModificar'>Borrar</a>";
+                echo "<p>$unaImagen[NombreImagen]</p>";
+            }      
+        }
+        
+        ?>
+        </figure>
     </div>
 
     <!-- Script validar -->
