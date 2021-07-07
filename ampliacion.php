@@ -44,6 +44,10 @@ else {
 
 }
 
+// Imagenes
+$queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $id";
+$resultImagenes = mysqli_query($link, $queryImagenes);
+
 // Materiales complementaria y relacional
 $queryMaterialesAmpliacion="SELECT DISTINCT Nombre FROM materiales AS M INNER JOIN sillasMateriales AS SM ON SM.IDMaterial = M.ID WHERE SM.IDSilla = $id";
 $resultMaterialesAmpliacion=mysqli_query($link, $queryMaterialesAmpliacion);
@@ -153,7 +157,7 @@ $resultSimilares = mysqli_query($link, $querySimilares);
         </nav>
         <div class="row">
             <div class="col-lg-8 row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <img class="img-fluid" src="assets/img/sillas/dummy.jpeg" alt="Dummy">
                 </div>
                 <div class="col-md-6 mt-4 mt-md-0">
@@ -164,7 +168,17 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                 </div>
                 <div class="col-md-6 mt-4">
                     <img class="img-fluid" src="assets/img/sillas/dummy4.jpeg" alt="Dummy">
-                </div>
+                </div> -->
+                <?php 
+                // Recorrido imagenes
+                    while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                        if($unaImagen['DestinoImagen'] === 'ampliacion') {
+                            echo "<div class='col-md-6 mb-4'>";
+                                echo "<img class='img-fluid' src='assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                            echo "</div>";
+                        } 
+                    }
+                ?>
             </div>
             <div class="col-lg-4 prod-info mt-3 mt-lg-0">
                 <span>Código: <?php echo $unaSilla[Codigo]?></span>

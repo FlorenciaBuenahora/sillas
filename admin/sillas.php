@@ -22,6 +22,11 @@ if(isset($_GET['mensaje'])) {
             $clase = "correcto";
             break;
         }
+        case "imgOk"; {
+            $textoMensaje = "Imágenes subidas correctamente";
+            $clase = "correcto";
+            break;
+        }
         case "eliminadoMal"; {
             $textoMensaje = "No se ha eliminado una silla";
             $clase = "error";
@@ -86,14 +91,10 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
                 <!-- <th scope="col">Ambiente</th> -->
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            <!-- <tr>
-                <td>holis</td>
-                <td>alo</td>
-            </tr> -->
-
             <?php
                 while($unaSilla=mysqli_fetch_array($resultListaSillas)) {
                     echo "<tr>";
@@ -102,7 +103,8 @@ $resultListaSillas = mysqli_query($link, $queryListaSillas);
                         echo "<td>USD $unaSilla[Precio]</td>";
                         echo "<td>$unaSilla[Marca]</td>";
                         echo "<td>$unaSilla[Ambiente]</td>";
-                        echo "<td><a href='formModificar.php?ID=$unaSilla[ID]'>Modificar</a></td>"; 
+                        echo "<td><a href='formModificar.php?ID=$unaSilla[ID]'>Modificar</a></td>";
+                        echo "<td><a href='formImg.php?ID=$unaSilla[ID]'>Imagen</a></td>";
                         echo "<td><a href='eliminar.php?ID=$unaSilla[ID]'>Eliminar</a></td>";        
                     echo "</tr>";
                 }
