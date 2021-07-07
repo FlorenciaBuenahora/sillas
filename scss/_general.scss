@@ -13,7 +13,7 @@ body {
     color: $dark-celeste;
     font-weight: 600;
 
-    &:hover, &:focus {
+    &:hover, &:focus, &:active {
         background-color: $darken-celeste;
     }
 }
@@ -23,7 +23,7 @@ body {
     font-weight: 600;
     margin-left: 10px;
 
-    &:hover {
+    &:hover, &:focus, &:active {
         background-color: $darken-celeste;
         border-color: $darken-celeste;
     }

@@ -15,6 +15,11 @@ if(isset($_GET['mensaje'])) {
     }
 }
 
+// Consulta listado sillas
+$queryListaSillas = "SELECT S.ID, S.Nombre, S.Precio, M.NombreMarca AS Marca FROM sillas AS S
+                    INNER JOIN marcas AS M ON M.ID = S.Marca ORDER BY S.ID DESC LIMIT 10";
+
+$resultListaSillas = mysqli_query($link, $queryListaSillas);
 ?>
 
 <!DOCTYPE html>
@@ -30,5 +35,31 @@ if(isset($_GET['mensaje'])) {
 <body>
 <?php include("header.php");?>
 <p class="mensaje<?php echo $clase?>"><?php echo $textoMensaje?></p>
+
+<!-- Recientemente agregados -->
+<h1>Agregados recientemente</h1>
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Marca</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                while($unaSilla=mysqli_fetch_array($resultListaSillas)) {
+                    echo "<tr>";
+                        echo "<td>$unaSilla[ID]</td>";
+                        echo "<td>$unaSilla[Nombre]</td>";
+                        echo "<td>USD $unaSilla[Precio]</td>";
+                        echo "<td>$unaSilla[Marca]</td>";   
+                    echo "</tr>";
+                }
+            ?>
+        </tbody>
+    </table>
+
 </body>
 </html>

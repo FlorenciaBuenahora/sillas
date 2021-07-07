@@ -41,13 +41,24 @@ if(isset($_GET['mensaje'])) {
     <title>Login</title>
 </head>
 <body>
-    <form action="validarUsuario.php" method="POST">
-        <label for="usuario">Usuario</label>
-        <input type="text" name="usuario" id="usuario">
-        <label for="contrasenia">Contraseña</label>
-        <input type="password" name="contrasenia" id="contrasenia">
-        <p class="mensaje<?php echo $clase?>"><?php echo $textoMensaje?></p>
-        <input type="submit" value="Ingresar">
-    </form>
+    <div class="row g-0">
+    <div class="col-md-6">
+        <div class="login-img">
+        </div>
+        <!-- <img src="assets/img/img-login.jpg" alt="Imagen login de dos sillas" class="img-fluid"> -->
+    </div>
+    <div class="col-md-6 form-col d-flex justify-content-center align-items-center">
+        <form action="validarUsuario.php" method="POST" class="form-login p-5 d-flex flex-column">
+            <!-- <h2 class="mb-3">Login</h2> -->
+            <img src="../assets/logo/sillasuy.svg" alt="Logo" class="m-auto">
+            <label for="usuario" class="form-label mt-4">Usuario</label>
+            <input type="text" name="usuario" id="usuario" class="form-control mb-3" required>
+            <label for="contrasenia" class="form-label">Contraseña</label>
+            <input type="password" name="contrasenia" id="contrasenia" class="form-control" required>
+            <p class="mensaje<?php echo $clase?>"><?php echo $textoMensaje?></p>
+            <input class="btn btn-primary" role="button" type="submit" value="Ingresar">
+        </form>
+    </div>
+    </div>
 </body>
 </html>
