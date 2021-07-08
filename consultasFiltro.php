@@ -46,7 +46,7 @@ if(isset($_GET['filtrarTodo'])) {
                 if($unaMarca === $marcaSeleccionada[0]){
                     $stringFiltro = $stringFiltro ." AND (M.ID = $unaMarca";
                 }
-                // Si no es el primero ni el ultimo simplemente se agrega el texto comun sin ningun parentesis
+                // Si es el ultimo se agrega el texto con el parentesis al final
                 else if($unaMarca === end($marcaSeleccionada)){
                     $stringFiltro = $stringFiltro ." OR M.ID = $unaMarca)";
                 }

@@ -27,13 +27,6 @@ while($sillaFiltrada=mysqli_fetch_array($resultNombreAmbientePorId)){
 
 $resultSillasPorAmbiente=mysqli_query($link, $querySillasPorAmbiente);
 
-// Imagenes
-
-// $queryImagenes = "SELECT I.ID, I.IDSilla, I.NombreImagen, I.AltImagen, I.DestinoImagen FROM imagenes AS I INNER JOIN sillasAmbientes AS SA 
-// WHERE SA.IDSilla = I.IDSilla AND SA.IDAmbiente = $ambienteSeleccionado";
-
-// echo $resultImagenes;
-
 ?>
 
 <!DOCTYPE html>
