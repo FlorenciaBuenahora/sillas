@@ -29,6 +29,9 @@ if (isset($_GET['buscar'])) {
         <div class="row mt-4">
             <?php
                 while($sillaBuscada=mysqli_fetch_array($resultBuscador)){
+                    // Imagenes
+                    $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $sillaBuscada[ID]";
+                    $resultImagenes = mysqli_query($link, $queryImagenes);
 
                     $productoNuevo = "";
                             if($sillaBuscada['Nuevo'] == 1) {
@@ -39,8 +42,13 @@ if (isset($_GET['buscar'])) {
                                 if($sillaBuscada['Nuevo'] == 1) {
                                     echo "<div class='etiqueta-nuevo'>Nuevo</div>";
                                 }
-                                    
-                                    echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
+                                while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                                    if($unaImagen['DestinoImagen'] === 'catalogo') {
+        
+                                            echo "<img class='img-fluid' src='assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                                    } 
+                                }
+                                    // echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
                                     echo "<h2>$sillaBuscada[Nombre]</h2>";
                                     echo "<p>USD $sillaBuscada[Precio]</p>";
                                 echo "</a>";

@@ -27,6 +27,13 @@ while($sillaFiltrada=mysqli_fetch_array($resultNombreAmbientePorId)){
 
 $resultSillasPorAmbiente=mysqli_query($link, $querySillasPorAmbiente);
 
+// Imagenes
+
+// $queryImagenes = "SELECT I.ID, I.IDSilla, I.NombreImagen, I.AltImagen, I.DestinoImagen FROM imagenes AS I INNER JOIN sillasAmbientes AS SA 
+// WHERE SA.IDSilla = I.IDSilla AND SA.IDAmbiente = $ambienteSeleccionado";
+
+// echo $resultImagenes;
+
 ?>
 
 <!DOCTYPE html>
@@ -56,9 +63,11 @@ include("nav.php");
         <div class="col-md-8 col-lg-10 row mt-4 mt-md-0 ms-md-auto prod">
             <?php
                 while($sillaFiltrada=mysqli_fetch_array($resultSillasPorAmbiente)){
-                    // $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $id";
-                    // $resultImagenes = mysqli_query($link, $queryImagenes);
-                    
+
+                    // Imagenes
+                    $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $sillaFiltrada[ID]";
+                    $resultImagenes = mysqli_query($link, $queryImagenes);
+
                     $productoNuevo = "";
                     if($sillaFiltrada['Nuevo'] == 1) {
                         $productoNuevo = 'prod-nuevo';
@@ -68,10 +77,15 @@ include("nav.php");
                         if($sillaFiltrada['Nuevo'] == 1) {
                             echo "<div class='etiqueta-nuevo'>Nuevo</div>";
                         }
-                            
-                            echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
-                            echo "<h2>$sillaFiltrada[Nombre]</h2>";
-                            echo "<p>USD $sillaFiltrada[Precio]</p>";
+                        while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                            if($unaImagen['DestinoImagen'] === 'catalogo') {
+
+                                    echo "<img class='img-fluid' src='assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                                    // echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
+                            } 
+                        }
+                                    echo "<h2>$sillaFiltrada[Nombre]</h2>";
+                                    echo "<p>USD $sillaFiltrada[Precio]</p>";
                         echo "</a>";
                     echo "</div>";
                 }

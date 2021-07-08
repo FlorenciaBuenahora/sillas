@@ -2,10 +2,10 @@
 include("conexion.php");
 
 // Los más nuevos //
-$queryNuevos="SELECT ID, Nombre, Precio FROM sillas WHERE Nuevo=1 ORDER BY ID DESC LIMIT 9";
+$queryNuevos="SELECT ID, Nombre, Precio FROM sillas WHERE Nuevo=1 ORDER BY ID DESC LIMIT 8";
 $resultNuevos=mysqli_query($link, $queryNuevos);
 
-// // Destacados
+// Destacados
 $queryDestacados="SELECT ID, Nombre, Precio, Destacado FROM sillas WHERE Destacado=1 ORDER BY RAND() LIMIT 8";
 $resultDestacados=mysqli_query($link, $queryDestacados);
 
@@ -40,6 +40,10 @@ $resultDestacados=mysqli_query($link, $queryDestacados);
                     $contador = 0;
                     $active = "";
                         while($unNuevo=mysqli_fetch_array($resultNuevos)) {
+                            // Imagenes
+                            $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $unNuevo[ID]";
+                            $resultImagenes = mysqli_query($link, $queryImagenes);
+
                             // Cuando el contador es igual a 0 la clase pasa a ser active
                             if($contador === 0){
                             $active = "active";
@@ -52,7 +56,13 @@ $resultDestacados=mysqli_query($link, $queryDestacados);
                                 echo "<div class='col-md-6 col-lg-3'>";
                                     echo "<a class='prod-nuevo' href='ampliacion.php?ID=$unNuevo[ID]'>";
                                         echo "<div class='etiqueta-nuevo'>Nuevo</div>";
-                                        echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
+                                        while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                                            if($unaImagen['DestinoImagen'] === 'catalogo') {
+                
+                                                    echo "<img class='img-fluid' src='assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                                            } 
+                                        }
+                                        // echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
                                         echo "<h2>$unNuevo[Nombre]</h2>";
                                         echo "<p>USD $unNuevo[Precio]</p>";
                                     echo "</a>";
@@ -101,6 +111,10 @@ $resultDestacados=mysqli_query($link, $queryDestacados);
                     $contador = 0;
                     $active = "";
                         while($unDestacado=mysqli_fetch_array($resultDestacados)) {
+                             // Imagenes
+                            $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $unDestacado[ID]";
+                            $resultImagenes = mysqli_query($link, $queryImagenes);
+
                             // Cuando el contador es igual a 0 la clase pasa a ser active
                             if($contador === 0){
                             $active = "active";
@@ -112,7 +126,13 @@ $resultDestacados=mysqli_query($link, $queryDestacados);
                             echo "<div class='carousel-item $active'>";
                                 echo "<div class='col-md-6 col-lg-3'>";
                                     echo "<a href='ampliacion.php?ID=$unDestacado[ID]'>";
-                                        echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
+                                    while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                                        if($unaImagen['DestinoImagen'] === 'catalogo') {
+            
+                                                echo "<img class='img-fluid' src='assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                                        } 
+                                    }
+                                        // echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
                                         echo "<h2>$unDestacado[Nombre]</h2>";
                                         echo "<p>USD $unDestacado[Precio]</p>";
                                     echo "</a>";

@@ -55,18 +55,20 @@ $resultMaterialesAmpliacion=mysqli_query($link, $queryMaterialesAmpliacion);
 $stringMateriales = "";
 $arrayMateriales = array();
 
-while($Materiales=mysqli_fetch_array($resultMaterialesAmpliacion)) {
-    $arrayMateriales = explode(", ", "$Materiales[0]");
-    foreach($arrayMateriales as $material){
-        if($material === $arrayMateriales[0]){
-            $stringMateriales = $stringMateriales. $material;
+$materialesFiltrados=mysqli_fetch_array($resultMaterialesAmpliacion);
+    
+    foreach($resultMaterialesAmpliacion as $materiales){
+        foreach($materiales as $material){
+            // Si es el primer elemento  no agrega coma
+            if($material === $materialesFiltrados[0]){
+                $stringMateriales = $stringMateriales. $material;
+            }
+            // De lo contrario agrega coma
+            else{
+                $stringMateriales = $stringMateriales.", ".$material;
+            }
         }
-        else{
-            $stringMateriales = ", ".$stringMateriales.$material;
-        }
-
     }
-}
 
 // Estilos complementaria y relacional
 $queryEstilosAmpliacion="SELECT DISTINCT NombreEstilo FROM estilos AS E INNER JOIN sillasEstilos AS SE ON SE.IDEstilo = E.ID WHERE SE.IDSilla = $id";
@@ -75,18 +77,20 @@ $resultEstilosAmpliacion=mysqli_query($link, $queryEstilosAmpliacion);
 $stringEstilos = "";
 $arrayEstilos = array();
 
-while($Estilos=mysqli_fetch_array($resultEstilosAmpliacion)) {
-    $arrayEstilos = explode(", ", "$Estilos[0]");
-    foreach($arrayEstilos as $estilo){
-        if($estilo === $arrayEstilos[0]){
-            $stringEstilos = $stringEstilos. $estilo;
+$estilosFiltrados=mysqli_fetch_array($resultEstilosAmpliacion);
+    
+    foreach($resultEstilosAmpliacion as $estilos){
+        foreach($estilos as $estilo){
+            // Si es el primer elemento  no agrega coma
+            if($estilo === $estilosFiltrados[0]){
+                $stringEstilos = $stringEstilos. $estilo;
+            }
+            // De lo contrario agrega coma
+            else{
+                $stringEstilos =$stringEstilos.", ".$estilo;
+            }
         }
-        else{
-            $stringEstilos = ", ".$stringEstilos.$estilo;
-        }
-
     }
-}
 
 // Marcas complementaria
 $queryMarcasAmpliacion="SELECT DISTINCT NombreMarca FROM marcas AS M INNER JOIN sillas AS S ON S.Marca = M.ID WHERE S.ID = $id";
@@ -115,18 +119,20 @@ $resultAmbienteAmpliacion=mysqli_query($link, $queryAmbienteAmpliacion);
 $stringAmbientes = "";
 $arrayAmbiente = array();
 
-while($Ambiente=mysqli_fetch_array($resultAmbienteAmpliacion)) {
-    $arrayAmbiente = explode(", ", "$Ambiente[0]");
-    foreach($arrayAmbiente as $ambiente){
-        if($ambiente === $arrayAmbiente[0]){
-            $stringAmbientes = $stringAmbientes. $ambiente;
+$ambientesFiltrados=mysqli_fetch_array($resultAmbienteAmpliacion);
+    
+    foreach($resultAmbienteAmpliacion as $ambientes){
+        foreach($ambientes as $ambiente){
+            // Si es el primer elemento  no agrega coma
+            if($ambiente === $ambientesFiltrados[0]){
+                $stringAmbientes = $stringAmbientes. $ambiente;
+            }
+            // De lo contrario agrega coma
+            else{
+                $stringAmbientes = $stringAmbientes.", ".$ambiente;
+            }
         }
-        else{
-            $stringAmbientes = ", ".$stringAmbientes.$ambiente;
-        }
-
     }
-}
 
 // Productos similares
 $querySimilares = "SELECT S.ID, S.Nombre, S.Precio FROM sillas AS S 
@@ -226,6 +232,9 @@ $resultSimilares = mysqli_query($link, $querySimilares);
             <div class="row">
                 <?php
                 while($sillaSimilar=mysqli_fetch_array($resultSimilares)){
+                    // Imagenes
+                    $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $sillaSimilar[ID]";
+                    $resultImagenes = mysqli_query($link, $queryImagenes);
 
                     $productoNuevo = "";
                         if($sillaSimilar['Nuevo'] == 1) {
@@ -236,8 +245,13 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                             if($sillaSimilar['Nuevo'] == 1) {
                                 echo "<div class='etiqueta-nuevo'>Nuevo</div>";
                             }
-                                
-                                echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
+                            while($unaImagen = mysqli_fetch_array($resultImagenes)) {
+                                if($unaImagen['DestinoImagen'] === 'catalogo') {
+    
+                                        echo "<img class='img-fluid' src='assets/img/sillas/$unaImagen[NombreImagen]' alt='$unaImagen[AltImagen]'>";
+                                } 
+                            }
+                                // echo "<img class='img-fluid' src='assets/img/sillas/dummy.jpeg' alt='Silla ejemplo'>";
                                 echo "<h2>$sillaSimilar[Nombre]</h2>";
                                 echo "<p>USD $sillaSimilar[Precio]</p>";
                             echo "</a>";
