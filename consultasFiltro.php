@@ -28,7 +28,7 @@
 // }
 
 // Filtrar TODO
-$textoIN="";
+// $textoIN="";
 if(isset($_GET['filtrarTodo'])) {
 
     // Marca
