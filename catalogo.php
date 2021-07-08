@@ -8,7 +8,6 @@ $ambienteSeleccionado=$_GET['Ambiente'];
 $queryNombreAmbientePorId = "SELECT DISTINCT A.NombreAmbiente FROM ambientes AS A WHERE A.ID = $ambienteSeleccionado";
 $resultNombreAmbientePorId = mysqli_query($link,$queryNombreAmbientePorId);
 
-
 // Se crea la query principal de filtro agregandole como filtro principal el ambiente seleccionado
 $querySillasPorAmbiente="SELECT DISTINCT S.ID, S.Nombre, S.Precio, S.Nuevo FROM sillas AS S
 INNER JOIN sillasMateriales AS SM ON S.ID = SM.IDSilla 
@@ -57,6 +56,9 @@ include("nav.php");
         <div class="col-md-8 col-lg-10 row mt-4 mt-md-0 ms-md-auto prod">
             <?php
                 while($sillaFiltrada=mysqli_fetch_array($resultSillasPorAmbiente)){
+                    // $queryImagenes = "SELECT * FROM imagenes WHERE IDSilla = $id";
+                    // $resultImagenes = mysqli_query($link, $queryImagenes);
+                    
                     $productoNuevo = "";
                     if($sillaFiltrada['Nuevo'] == 1) {
                         $productoNuevo = 'prod-nuevo';

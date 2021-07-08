@@ -185,12 +185,12 @@ $resultSimilares = mysqli_query($link, $querySimilares);
                 <h1 class="mt-2"><?php echo $unaSilla['Nombre']?></h1>
                 <h2 class="mt-4">USD <?php echo $unaSilla[Precio]?></h2>
                 <p class="mt-3"><?php echo $unaSilla['Descripcion']?></p>
-                <h3 class="mt-4">Variantes</h3>
+                <!-- <h3 class="mt-4">Variantes</h3>
                 <div class="variantes d-flex">
                     <div style="width:55px; height:65px; background-color:grey;"></div>
                     <div style="width:55px; height:65px; background-color:grey;"></div>
                     <div style="width:55px; height:65px; background-color:grey;"></div>
-                </div>
+                </div> -->
                 <div class="d-flex mt-4">
                     <div class="col-4">
                         <select class="form-select" aria-label="Default select example">
